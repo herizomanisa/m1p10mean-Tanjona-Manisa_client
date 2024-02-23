@@ -5,34 +5,43 @@
         <c-card-group>
           <c-card class="p-4">
             <c-card-body>
-              <form cForm>
+              <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
                 <h1>Login</h1>
                 <p class="text-medium-emphasis">Sign In to your account</p>
-                <c-input-group class="mb-3">
+                <c-input-group class="mb-3 flex flex-column">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
-                  <input autoComplete="username" cFormControl placeholder="Username" />
+                  <input autoComplete="username" formControlName="nom" placeholder="Username" >
+                  @if(loginForm.get('nom')?.hasError('required') && loginForm.get('nom')?.touched) {
+                    <p class="text-danger">username is required</p>
+                  }
                 </c-input-group>
-                <c-input-group class="mb-4">
+                <c-input-group class="mb-4 flex flex-column">
+                  
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
+                  
                   <input
                     autoComplete="current-password"
-                    cFormControl
+                    formControlName="mdp"
                     placeholder="Password"
                     type="password"
-                  />
+                  >
+                  @if(loginForm.get('mdp')?.hasError('required') && loginForm.get('mdp')?.touched) {
+                    <p class="text-danger">mdp is required</p>
+                  }
+                  
                 </c-input-group>
                 <c-row>
                   <c-col xs="6">
-                    <button cButton class="px-4" color="primary">
+                    <button type="submit" cButton class="px-4" color="primary">
                       Login
                     </button>
                   </c-col>
                   <c-col class="text-right" xs="6">
-                    <button cButton class="px-0" color="link">
+                    <button type="submit" cButton class="px-0" color="link">
                       Forgot password?
                     </button>
                   </c-col>
@@ -48,7 +57,7 @@
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua.
                 </p>
-                <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
+                <button cButton class="mt-3" color="primary" routerLink="/register">
                   Register Now!
                 </button>
               </div>

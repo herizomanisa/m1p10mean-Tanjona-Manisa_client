@@ -7,15 +7,33 @@ import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 
+import {canActivate} from './services/guard/auth_guard.service';
+
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: 'dashboard',
+  //   canActivate: [AuthGuardService],
+  //   pathMatch: 'full'
+  // },
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      title: 'Login Page'
+    }
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    data: {
+      title: 'Register Page'
+    }
   },
   {
     path: '',
     component: DefaultLayoutComponent,
+    canActivate: [canActivate],
     data: {
       title: 'Home'
     },
@@ -85,22 +103,9 @@ const routes: Routes = [
     data: {
       title: 'Page 500'
     }
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    data: {
-      title: 'Login Page'
-    }
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    data: {
-      title: 'Register Page'
-    }
-  },
-  {path: '**', redirectTo: 'dashboard'}
+  }
+  
+  // {path: '**', redirectTo: 'dashboard'}
 ];
 
 @NgModule({
