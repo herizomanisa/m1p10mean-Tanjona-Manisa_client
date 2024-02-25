@@ -11,6 +11,7 @@ import { ResponseData } from '../../../models/ResponseData';
 })
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
+  errorMessage: string | undefined;
 
   constructor(
     private fb: FormBuilder, 
@@ -41,7 +42,10 @@ export class LoginComponent implements OnInit{
             }
             console.log('mbol madn')
           },
-        error: (err) => console.log(err),
+        error: (err) => {
+          this.errorMessage = "Identifiant ou mot de passe incorrect";
+          console.error(err);
+        },
         complete: () => console.log('complete')
       }
         // (result: ResponseData<String>) =>{
