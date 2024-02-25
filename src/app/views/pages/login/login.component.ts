@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit{
             console.log(result.details)
             const rep: string= result.details as string;
             if(rep !== null) {
-              localStorage.setItem('x-authorization-token', rep);
+              localStorage.setItem('x-authorization-m-token', rep);
               return;
             }
             console.log('mbol madn')

@@ -1,5 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResponseData } from '../../models/ResponseData';
 import { environment } from '../../../environments/environment';
@@ -7,8 +7,8 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class ManagerService {
-  private managers_apiurl = `${environment.apiUrl}/api/managers`;
+export class ClientService {
+  private customers_apiurl = `${environment.apiUrl}/api/customers`;
 
   constructor(private http: HttpClient) {}
 
@@ -20,12 +20,12 @@ export class ManagerService {
   }
 
   async login(
-    nom: string,
+    email: string,
     mdp: string
   ): Promise<Observable<ResponseData<String>>> {
     return await this.http.post<ResponseData<String>>(
-      `${this.managers_apiurl}/login`,
-      { nom, mdp }
+      `${this.customers_apiurl}/login`,
+      { email, mdp }
     );
   }
 }

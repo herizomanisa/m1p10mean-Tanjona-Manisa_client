@@ -11,6 +11,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   @Input() sidebarId: string = "sidebar";
 
+  @Input() token: string | null = "";
+
   public newMessages = new Array(4)
   public newTasks = new Array(5)
   public newNotifications = new Array(5)

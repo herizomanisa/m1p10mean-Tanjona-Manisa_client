@@ -1,32 +1,60 @@
-import { inject } from '@angular/core';
-import { Router, UrlTree } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+  Router,
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { LocalStorageService } from '../storage/local-storage.service';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AuthGuardService implements CanActivate{
+@Injectable({
+  providedIn: 'root',
+})
+export class RoleGuard implements CanActivate {
+  constructor(
+    private router: Router,
+    private localStorageService: LocalStorageService
+  ) {}
 
-//   constructor(private router: Router) {}
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    const expectedRole = next.data['expectedRole'];
+    const tokenKeys = [
+      'x-authorization-m-token',
+      'x-authorization-c-token',
+      'x-authorization-e-token',
+    ];
+    let decodedToken: any;
 
-//   canActivate(): Observable<boolean | UrlTree> {
-//     console.log('here')
-//     const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
-//     if (!token) {
-//       return of(this.router.parseUrl('/login'));
-//     }
-//     return of(true);
-//   }
-// }
+    for (const key of tokenKeys) {
+      const token = this.localStorageService.getData(key);
+      if (token) {
+        decodedToken = this.localStorageService.getDecodedAccessToken(token);
+        break;
+      }
+    }
 
-export const canActivate = (): boolean => {
-  const route = inject(Router)
-    const token = localStorage.getItem('x-authorization-token'); // Assuming token is stored in localStorage
-    if (!token) {
-      // return of(route.parseUrl('/login'));
-      route.navigate(['/login']);
+    if (!decodedToken || decodedToken.role !== expectedRole) {
+      const redirectPaths = {
+        'x-authorization-m-token': '/login',
+        'x-authorization-c-token': '/client/login',
+        'x-authorization-e-token': '/employe/login',
+      };
+      const redirectTo =
+        Object.values(redirectPaths).find((path) => path !== '/login') ||
+        '/login';
+      this.router.navigate([redirectTo]);
       return false;
     }
-    // return of(true);
+
     return true;
-};
+  }
+}
