@@ -4,6 +4,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResponseData } from '../../models/ResponseData';
 import { environment } from '../../../environments/environment';
 
+interface CustomerForm {
+  image: string | null;
+  nom: string;
+  prenom: string;
+  tel: string;
+  email: string;
+  addresse: string | null;
+  mdp: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -26,6 +35,13 @@ export class ClientService {
     return await this.http.post<ResponseData<String>>(
       `${this.customers_apiurl}/login`,
       { email, mdp }
+    );
+  }
+
+  register(data: CustomerForm): Observable<any> {
+    return this.http.post<ResponseData<String>>(
+      `${this.customers_apiurl}/create`,
+      data
     );
   }
 }
