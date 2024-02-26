@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Import containers
-import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
+import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutClientComponent, DefaultLayoutComponent } from './containers';
 
 import {
   AvatarModule,
@@ -44,7 +44,8 @@ import { tokenInterceptor } from './services/token.interceptor';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
-  DefaultLayoutComponent
+  DefaultLayoutComponent,
+  DefaultLayoutClientComponent
 ];
 
 @NgModule({

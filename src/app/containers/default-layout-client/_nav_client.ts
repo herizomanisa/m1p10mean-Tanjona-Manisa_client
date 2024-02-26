@@ -1,6 +1,6 @@
 import { INavData } from '@coreui/angular';
 
-export const navItems: INavData[] = [
+export const navItemsClient: INavData[] = [
   {
     name: 'Liste des services',
     url: '/',

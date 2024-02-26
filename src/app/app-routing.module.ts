@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DefaultLayoutComponent } from './containers';
+import { DefaultLayoutClientComponent } from './containers';
 import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
@@ -64,14 +65,14 @@ const routes: Routes = [
             (m) => m.DashboardModule
           ),
       },
-    ]
+    ],
   },
 
   // client route
   
   {
     path: '',
-    component: DefaultLayoutComponent,
+    component: DefaultLayoutClientComponent,
     canActivate: [canActivateClient],
     data: {
       expectedRole: 'customer',
@@ -156,7 +157,7 @@ const routes: Routes = [
     },
   },
 
-  // {path: '**', redirectTo: 'dashboard'}
+  {path: '**', redirectTo: '404'}
 ];
 
 @NgModule({
