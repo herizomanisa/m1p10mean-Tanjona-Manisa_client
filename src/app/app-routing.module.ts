@@ -7,6 +7,7 @@ import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { ClientLoginComponent } from './views/pages/client-login/client-login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
+import { ClientRegisterComponent } from './views/pages/client-register/client-register.component';
 
 import { RoleGuard } from './services/guard/auth_guard.service';
 
@@ -39,6 +40,13 @@ const routes: Routes = [
     },
   },
   {
+    path: 'client/register',
+    component: ClientRegisterComponent,
+    data: {
+      title: 'Client Register Page',
+    },
+  },
+  {
     path: '',
     component: DefaultLayoutComponent,
     canActivate: [RoleGuard],
@@ -47,6 +55,13 @@ const routes: Routes = [
       title: 'Home',
     },
     children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./views/service/service.module').then(
+            (m) => m.ServiceModule
+          ),
+      },
       {
         path: 'dashboard',
         loadChildren: () =>
