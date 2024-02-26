@@ -9,7 +9,7 @@ import { ClientLoginComponent } from './views/pages/client-login/client-login.co
 import { RegisterComponent } from './views/pages/register/register.component';
 import { ClientRegisterComponent } from './views/pages/client-register/client-register.component';
 
-import { RoleGuard } from './services/guard/auth_guard.service';
+import { canActivate, canActivateClient } from './services/guard/auth_guard.service';
 
 const routes: Routes = [
   // {
@@ -46,10 +46,33 @@ const routes: Routes = [
       title: 'Client Register Page',
     },
   },
+
+  // Admin route
+
+  {
+    path: 'admin',
+    component: DefaultLayoutComponent,
+    canActivate: [canActivate],
+    data: {
+      title: 'Home',
+    },
+    children: [
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./views/dashboard/dashboard.module').then(
+            (m) => m.DashboardModule
+          ),
+      },
+    ]
+  },
+
+  // client route
+  
   {
     path: '',
     component: DefaultLayoutComponent,
-    canActivate: [RoleGuard],
+    canActivate: [canActivateClient],
     data: {
       expectedRole: 'customer',
       title: 'Home',
