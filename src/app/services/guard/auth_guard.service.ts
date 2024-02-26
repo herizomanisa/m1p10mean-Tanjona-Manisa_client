@@ -29,3 +29,26 @@ export const canActivate = (): boolean => {
     }
     return true;
 };
+
+export const canActivateEmploye = (): boolean => {
+  const route = inject(Router)
+    const token = localStorage.getItem('x-authorization-e-token');
+    if (!token) {
+      // return of(route.parseUrl('/login'));
+      route.navigate(['/employe/login']);
+      return false;
+    }
+    return true;
+};
+
+
+export const canActivateClient = (): boolean => {
+  const route = inject(Router)
+    const token = localStorage.getItem('x-authorization-c-token');
+    if (!token) {
+      // return of(route.parseUrl('/login'));
+      route.navigate(['/client/login']);
+      return false;
+    }
+    return true;
+};

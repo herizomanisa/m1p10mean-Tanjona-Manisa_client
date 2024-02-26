@@ -12,13 +12,13 @@ import { ManagerService } from 'src/app/services/manager/manager.service';
 export class ChartsComponent implements OnInit{
 
   constructor(private managerService: ManagerService){}
-  months: string[]= []
-  async ngOnInit(): Promise<void>{
-    const result = await lastValueFrom(this.managerService.getStatistics_rdv_mois())
-    for(let i=0;i<result!.details!.length;i++){
-      this.months.push(result!.details![i].name)
-    }
-    console.log(this.months)
+  // months: string[]= []
+  ngOnInit(): void{
+    // const result = await lastValueFrom(this.managerService.getStatistics_rdv_mois())
+    // for(let i=0;i<result!.details!.length;i++){
+    //   this.months.push(result!.details![i].name)
+    // }
+    // console.log(this.months)
     // this.managerService.getStatistics_rdv_mois().subscribe({
     //   next: (result: ResponseData<StatMois[]>) => {
         
@@ -32,7 +32,7 @@ export class ChartsComponent implements OnInit{
     // })
   }
 
-  // months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   chartBarData = {
     labels: [...this.months].slice(0, 7),
@@ -45,9 +45,9 @@ export class ChartsComponent implements OnInit{
     ]
   };
 
-  // chartBarOptions = {
-  //   maintainAspectRatio: false,
-  // };
+  chartBarOptions = {
+    maintainAspectRatio: false,
+  };
 
   chartLineData = {
     labels: [...this.months].slice(0, 7),
