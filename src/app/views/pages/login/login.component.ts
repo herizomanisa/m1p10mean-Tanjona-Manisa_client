@@ -13,7 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
-  
+  errorMessage: string | undefined;
+
   constructor(
     private fb: FormBuilder, 
     private managerService: ManagerService,
@@ -49,7 +50,10 @@ export class LoginComponent implements OnInit{
             })
             // route.navigate(['/login']);
           },
-        error: (err) => console.log(err),
+        error: (err) => {
+          this.errorMessage = "Identifiant ou mot de passe incorrect";
+          console.error(err);
+        },
         complete: () => console.log('complete')
       })
     }else{
