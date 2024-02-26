@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/utils';
+import { ResponseData } from '../../models/ResponseData';
+import { ManagerService } from 'src/app/services/manager/manager.service';
+import { StatMois } from '../../models/StatMois'
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 export interface IChartProps {
   data?: any;
@@ -16,7 +20,7 @@ export interface IChartProps {
   providedIn: 'any'
 })
 export class DashboardChartsData {
-  constructor() {
+  constructor(private managerService: ManagerService) {
     this.initMainChart();
   }
 
@@ -26,7 +30,40 @@ export class DashboardChartsData {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  initMainChart(period: string = 'Month') {
+  async initMainChart(period: string = 'Month') {
+
+    let labels: string[] = [];
+
+    // console.log(await this.managerService.getStatistics_rdv_mois())
+    // const a = this.managerService.getStatistics_rdv_mois();
+    // a.subscribe({
+    //   next: (result: ResponseData<StatMois[]>) => {
+        
+    //   for(let i=0;i<result.details!.length;i++){
+    //     labels.push(result.details![i].name)
+    //   }
+    //   console.log(labels)
+    //   },
+    //   error: () => console.log(),
+    //   complete: () => console.log('complete')
+    // })
+    // const result = await lastValueFrom(this.managerService.getStatistics_rdv_mois())
+    // for(let i=0;i<result!.details!.length;i++){
+    //   labels.push(result!.details![i].name)
+    // }
+    // console.log(labels)
+    //  this.managerService.getStatistics_rdv_mois().subscribe({
+    //   next: (result: ResponseData<StatMois[]>) => {
+        
+    //   for(let i=0;i<result.details!.length;i++){
+    //     labels.push(result.details![i].name)
+    //   }
+    //   console.log(labels)
+    //   },
+    //   error: () => console.log(),
+    //   complete: () => console.log('complete')
+    // })
+
     const brandSuccess = getStyle('--cui-success') ?? '#4dbd74';
     const brandInfo = getStyle('--cui-info') ?? '#20a8d8';
     const brandInfoBg = hexToRgba(brandInfo, 10);
@@ -41,27 +78,30 @@ export class DashboardChartsData {
 
     // generate random values for mainChart
     for (let i = 0; i <= this.mainChart['elements']; i++) {
-      this.mainChart['Data1'].push(this.random(50, 240));
-      this.mainChart['Data2'].push(this.random(20, 160));
-      this.mainChart['Data3'].push(65);
+      // this.mainChart['Data1'].push(this.random(50, 240));
+      // this.mainChart['Data2'].push(this.random(20, 160));
+      // this.mainChart['Data3'].push(65);
     }
-
-    let labels: string[] = [];
+    
     if (period === 'Month') {
-      labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ];
+      // const result = await lastValueFrom(this.managerService.getStatistics_rdv_mois())
+    // for(let i=0;i<result!.details!.length;i++){
+    //   labels.push(result!.details![i].name)
+    // }
+      // labels = [
+      //   'January',
+      //   'February',
+      //   'March',
+      //   'April',
+      //   'May',
+      //   'June',
+      //   'July',
+      //   'August',
+      //   'September',
+      //   'October',
+      //   'November',
+      //   'December'
+      // ];
     } else {
       /* tslint:disable:max-line-length */
       const week = [
@@ -75,7 +115,7 @@ export class DashboardChartsData {
       ];
       labels = week.concat(week, week, week);
     }
-
+    
     const colors = [
       {
         // brandInfo
@@ -107,16 +147,16 @@ export class DashboardChartsData {
         label: 'Current',
         ...colors[0]
       },
-      {
-        data: this.mainChart['Data2'],
-        label: 'Previous',
-        ...colors[1]
-      },
-      {
-        data: this.mainChart['Data3'],
-        label: 'BEP',
-        ...colors[2]
-      }
+      // {
+      //   data: this.mainChart['Data2'],
+      //   label: 'Previous',
+      //   ...colors[1]
+      // },
+      // {
+      //   data: this.mainChart['Data3'],
+      //   label: 'BEP',
+      //   ...colors[2]
+      // }
     ];
 
     const plugins = {
@@ -145,7 +185,7 @@ export class DashboardChartsData {
         },
         y: {
           beginAtZero: true,
-          max: 250,
+          // max: 250,
           ticks: {
             maxTicksLimit: 5,
             stepSize: Math.ceil(250 / 5)
@@ -164,6 +204,42 @@ export class DashboardChartsData {
         }
       }
     };
+
+    this.managerService.getStatistics_rdv_mois()
+    .subscribe({
+      next: (result: ResponseData<StatMois[]>) => {
+        if (period === 'Month') {
+          for(let i=0;i<result.details!.length;i++){
+            labels.push(result.details![i].name)
+            this.mainChart['Data1'].push(result.details![i].value);
+          }
+        }
+
+        if (period === 'Day') {
+          for(let i=0;i<result.details!.length;i++){
+            labels.push(result.details![i].name)
+            this.mainChart['Data1'].push(result.details![i].value);
+          }
+        }
+
+        this.mainChart.type = 'line';
+        this.mainChart.options = options;
+        this.mainChart.data = {
+          datasets,
+          labels
+        };
+        // console.log(labels)
+      },
+      error: () => console.log(),
+      complete: () => console.log('complete')
+    })
+
+    // const result = await lastValueFrom(this.managerService.getStatistics_rdv_mois())
+    // for(let i=0;i<result!.details!.length;i++){
+    //   labels.push(result!.details![i].name)
+    // }
+    console.log(labels)
+    console.log('prem')
 
     this.mainChart.type = 'line';
     this.mainChart.options = options;

@@ -1,7 +1,9 @@
-import { Component , OnInit } from '@angular/core';
+import { Component , OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import {ManagerService} from '../../../services/manager/manager.service';
 import { ResponseData } from '../../../models/ResponseData';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +13,12 @@ import { ResponseData } from '../../../models/ResponseData';
 })
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
-
+  
   constructor(
     private fb: FormBuilder, 
-    private managerService: ManagerService
+    private managerService: ManagerService,
+    private route: Router,
+    private toast: ToastrService
   ) { }
 
   initializeForm(): void {
@@ -33,28 +37,21 @@ export class LoginComponent implements OnInit{
       const token = await this.managerService.login(this.loginForm.value.nom, this.loginForm.value.mdp)
       token.subscribe({
         next: (result: ResponseData<String>) =>{
-            console.log(result.details)
             const rep: string= result.details as string;
             if(rep !== null) {
-              localStorage.setItem('x-authorization-token', rep);
+              localStorage.setItem('x-authorization-m-token', rep);
+              this.route.navigate(['/dashboard']);
+              // route.parseUrl('/dashboard');
               return;
             }
-            console.log('mbol madn')
+            this.toast.error('Username or password incorrect','Error',{
+              timeOut: 2000,
+            })
+            // route.navigate(['/login']);
           },
         error: (err) => console.log(err),
         complete: () => console.log('complete')
-      }
-        // (result: ResponseData<String>) =>{
-        //   // console.log(result.details)
-        //   const rep: string= result.details as string;
-        //   localStorage.setItem('x-authorization-token', rep);
-        // }
-        // ()
-      )
-      console.log(this.loginForm.value.nom);
-      // if(token)
-      // console.log(this.loginForm.value.nom);
-      // localStorage.setItem('x-authorization-token', token);
+      })
     }else{
       this.loginForm.markAllAsTouched();
     }

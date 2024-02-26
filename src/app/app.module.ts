@@ -37,7 +37,9 @@ import {
 } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { tokenInterceptor } from './services/token.interceptor';
 
 const APP_CONTAINERS = [
   DefaultFooterComponent,
@@ -74,11 +76,14 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {
-      provide: LocationStrategy,
+      provide: [
+        LocationStrategy
+      ],
       useClass: HashLocationStrategy
     },
     IconSetService,

@@ -21,12 +21,11 @@ import { Observable, of } from 'rxjs';
 
 export const canActivate = (): boolean => {
   const route = inject(Router)
-    const token = localStorage.getItem('x-authorization-token'); // Assuming token is stored in localStorage
+    const token = localStorage.getItem('x-authorization-m-token');
     if (!token) {
       // return of(route.parseUrl('/login'));
       route.navigate(['/login']);
       return false;
     }
-    // return of(true);
     return true;
 };

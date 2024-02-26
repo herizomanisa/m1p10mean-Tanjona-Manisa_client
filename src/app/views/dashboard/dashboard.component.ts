@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
+import { lastValueFrom } from 'rxjs';
 
 interface IUser {
   name: string;
@@ -113,15 +114,18 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.initCharts();
+    console.log(this.chartsData.mainChart.data)
   }
 
   initCharts(): void {
     this.mainChart = this.chartsData.mainChart;
+    
   }
 
-  setTrafficPeriod(value: string): void {
+  async setTrafficPeriod(value: string): Promise<void> {
     this.trafficRadioGroup.setValue({ trafficRadio: value });
-    this.chartsData.initMainChart(value);
+    await this.chartsData.initMainChart(value);
+    // console.log(this.chartsData.mainChart.data)
     this.initCharts();
   }
 }

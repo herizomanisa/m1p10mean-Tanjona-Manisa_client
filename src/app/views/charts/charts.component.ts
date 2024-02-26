@@ -1,13 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { ResponseData } from 'src/app/models/ResponseData';
+import { StatMois } from 'src/app/models/StatMois';
+import { ManagerService } from 'src/app/services/manager/manager.service';
 
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.scss']
 })
-export class ChartsComponent {
+export class ChartsComponent implements OnInit{
 
-  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  constructor(private managerService: ManagerService){}
+  months: string[]= []
+  async ngOnInit(): Promise<void>{
+    const result = await lastValueFrom(this.managerService.getStatistics_rdv_mois())
+    for(let i=0;i<result!.details!.length;i++){
+      this.months.push(result!.details![i].name)
+    }
+    console.log(this.months)
+    // this.managerService.getStatistics_rdv_mois().subscribe({
+    //   next: (result: ResponseData<StatMois[]>) => {
+        
+    //   for(let i=0;i<result.details!.length;i++){
+    //     this.months.push(result.details![i].name)
+    //   }
+    //   console.log(this.months)
+    //   },
+    //   error: () => console.log(),
+    //   complete: () => console.log('complete')
+    // })
+  }
+
+  // months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   chartBarData = {
     labels: [...this.months].slice(0, 7),
