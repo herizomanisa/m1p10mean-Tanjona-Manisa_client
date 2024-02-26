@@ -8,19 +8,23 @@
               <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
                 <h1>Login</h1>
                 <p class="text-medium-emphasis">Sign In to your account</p>
-                <c-input-group class="mb-3 flex flex-column">
-                  <span cInputGroupText>
-                    <svg cIcon name="cil-envelope-closed"></svg>
-                  </span>
-                  <input
-                    autoComplete="email"
-                    formControlName="email"
-                    placeholder="Entrez votre email"
-                  />
+                <div class="mb-3">
+                  <c-input-group>
+                    <span cInputGroupText>
+                      <svg cIcon name="cil-envelope-closed"></svg>
+                    </span>
+                    <input
+                      autoComplete="email"
+                      formControlName="email"
+                      placeholder="Entrez votre email"
+                      class="form-control"
+                    />
+                  </c-input-group>
                   <p
                     *ngIf="
                       loginForm.get('email')?.hasError('required') &&
-                      loginForm.get('email')?.touched
+                      (loginForm.get('email')?.dirty ||
+                        loginForm.get('email')?.touched)
                     "
                     class="text-danger"
                   >
@@ -32,28 +36,39 @@
                   >
                     L'email doit avoir le bon format.
                   </p>
-                </c-input-group>
-                <c-input-group class="mb-4 flex flex-column">
-                  <span cInputGroupText>
-                    <svg cIcon name="cilLockLocked"></svg>
-                  </span>
+                </div>
+                <div class="mb-4">
+                  <c-input-group>
+                    <span cInputGroupText>
+                      <svg cIcon name="cilLockLocked"></svg>
+                    </span>
 
-                  <input
-                    autoComplete="current-password"
-                    formControlName="mdp"
-                    placeholder="Entrez votre mot de passe"
-                    type="password"
-                  />
+                    <input
+                      autoComplete="current-password"
+                      formControlName="mdp"
+                      placeholder="Entrez votre mot de passe"
+                      type="password"
+                      class="form-control"
+                    />
+                  </c-input-group>
                   @if(loginForm.get('mdp')?.hasError('required') &&
-                  loginForm.get('mdp')?.touched) {
+                  (loginForm.get('mdp')?.dirty ||
+                  loginForm.get('mdp')?.touched)) {
                   <p class="text-danger">Le mot de passe est obligatoire</p>
-                  } @if(errorMessage) {
-                  <p class="text-danger">{{ errorMessage }}</p>
                   }
-                </c-input-group>
+                </div>
+                @if(errorMessage) {
+                <p class="text-danger">{{ errorMessage }}</p>
+                }
+
                 <c-row>
                   <c-col xs="12">
-                    <button type="submit" cButton class="px-4 form-control" color="primary">
+                    <button
+                      type="submit"
+                      cButton
+                      class="px-4 form-control"
+                      color="primary"
+                    >
                       @if(isLoading) {
                       <c-spinner
                         aria-hidden="true"
@@ -63,11 +78,17 @@
                       Loading... }@else{ Login }
                     </button>
                   </c-col>
-                  <!-- <c-col class="text-right" xs="6">
-                      <button type="submit" cButton class="px-0" color="link">
-                        Forgot password?
-                      </button>
-                    </c-col> -->
+                  <c-col class="text-center" xs="12">
+                    <button
+                      type="button"
+                      cButton
+                      class="px-0"
+                      color="link"
+                      (click)="goToRegister()"
+                    >
+                      S'inscrire
+                    </button>
+                  </c-col>
                 </c-row>
               </form>
             </c-card-body>

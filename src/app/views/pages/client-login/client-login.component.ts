@@ -84,4 +84,8 @@ export class ClientLoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
     }
   }
+
+  goToRegister(): void {
+    this.route.navigate(['/client/register']);
+  }
 }
