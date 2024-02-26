@@ -1,0 +1,200 @@
+<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+        <c-card class="mx-4">
+          <c-card-body class="p-4">
+            <form
+              cForm
+              [formGroup]="registerForm"
+              (ngSubmit)="onRegisterSubmit()"
+            >
+              <h1>Inscription</h1>
+              <p class="text-medium-emphasis">Créez votre compte</p>
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <input
+                    autoComplete="name"
+                    cFormControl
+                    formControlName="nom"
+                    placeholder="Nom"
+                  />
+                </c-input-group>
+                <p
+                  *ngIf="
+                    registerForm.get('nom')?.hasError('required') &&
+                    (registerForm.get('nom')?.dirty ||
+                      registerForm.get('nom')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  Le nom est obligatoire.
+                </p>
+              </div>
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <input
+                    autoComplete="given-name"
+                    cFormControl
+                    formControlName="prenom"
+                    placeholder="Prénom"
+                  />
+                </c-input-group>
+                <p
+                  *ngIf="
+                    registerForm.get('prenom')?.hasError('required') &&
+                    (registerForm.get('prenom')?.dirty ||
+                      registerForm.get('prenom')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  Le prénom est obligatoire.
+                </p>
+              </div>
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cil-mobile"></svg>
+                  </span>
+                  <input
+                    autoComplete="tel"
+                    cFormControl
+                    formControlName="tel"
+                    placeholder="Numéro de téléphone"
+                  />
+                </c-input-group>
+                <p
+                  *ngIf="
+                    registerForm.get('tel')?.hasError('required') &&
+                    (registerForm.get('tel')?.dirty ||
+                      registerForm.get('tel')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  Le numéro de téléphone est obligatoire.
+                </p>
+              </div>
+
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>&#64;</span>
+                  <input
+                    autoComplete="email"
+                    formControlName="email"
+                    placeholder="E-mail"
+                    cFormControl
+                  />
+                </c-input-group>
+                <p
+                  *ngIf="
+                    registerForm.get('email')?.hasError('required') &&
+                    (registerForm.get('email')?.dirty ||
+                      registerForm.get('email')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  L'email est obligatoire.
+                </p>
+                <p
+                  *ngIf="registerForm.get('email')?.hasError('email')"
+                  class="text-danger"
+                >
+                  L'email doit avoir le bon format.
+                </p>
+              </div>
+
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cil-home"></svg>
+                  </span>
+                  <input
+                    autoComplete="street-address"
+                    cFormControl
+                    formControlName="addresse"
+                    placeholder="Adresse"
+                  />
+                </c-input-group>
+              </div>
+
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilLockLocked"></svg>
+                  </span>
+                  <input
+                    autoComplete="new-password"
+                    cFormControl
+                    placeholder="Mot de passe"
+                    formControlName="mdp"
+                    type="password"
+                  />
+                </c-input-group>
+                <p
+                  *ngIf="
+                    registerForm.get('mdp')?.hasError('required') &&
+                    (registerForm.get('mdp')?.dirty ||
+                      registerForm.get('mdp')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  Le mot de passe est obligatoire.
+                </p>
+              </div>
+              <div class="mb-4">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilLockLocked"></svg>
+                  </span>
+                  <input
+                    autoComplete="new-password"
+                    cFormControl
+                    formControlName="repeatedMdp"
+                    placeholder="Répétez le mot de passe"
+                    type="password"
+                    (ngModelChange)="checkPasswords()"
+                  />
+                </c-input-group>
+                <p
+                  *ngIf="registerForm.get('repeatedMdp')?.dirty && registerForm.errors?.['passwordMismatch']"
+                  class="text-danger"
+                >
+                  Le mot de passe ne correspond pas.
+                </p>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" cButton color="success">
+                  @if(isLoading) {
+                  <c-spinner
+                    aria-hidden="true"
+                    size="sm"
+                    variant="grow"
+                  ></c-spinner>
+                  Loading... }@else{ Soumettre l'inscription }
+                </button>
+                <div class="text-center" xs="12">
+                  <button
+                    type="button"
+                    cButton
+                    class="px-0"
+                    color="link"
+                    (click)="goToLogin()"
+                  >
+                    Se connecter
+                  </button>
+                </div>
+              </div>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>
