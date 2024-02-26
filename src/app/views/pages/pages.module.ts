@@ -4,9 +4,10 @@ import { CommonModule } from '@angular/common';
 import { PagesRoutingModule } from './pages-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ClientRegisterComponent } from './client-register/client-register.component';
 import { Page404Component } from './page404/page404.component';
 import { Page500Component } from './page500/page500.component';
-import { AlertModule, ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular';
+import { AlertModule, ButtonModule, CardModule, FormModule, GridModule, SpinnerModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -15,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     LoginComponent,
     RegisterComponent,
+    ClientRegisterComponent,
     Page404Component,
     Page500Component
   ],
@@ -28,7 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     IconModule,
     FormModule,
     AlertModule,
-    IconModule
+    IconModule,
+    SpinnerModule
   ]
 })
 export class PagesModule {

@@ -1,0 +1,114 @@
+<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col md="8">
+        <c-card-group>
+          <c-card class="p-4">
+            <c-card-body>
+              <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+                <h1>Login</h1>
+                <p class="text-medium-emphasis">Sign In to your account</p>
+                <div class="mb-3">
+                  <c-input-group>
+                    <span cInputGroupText>
+                      <svg cIcon name="cil-envelope-closed"></svg>
+                    </span>
+                    <input
+                      autoComplete="email"
+                      formControlName="email"
+                      placeholder="Entrez votre email"
+                      class="form-control"
+                    />
+                  </c-input-group>
+                  <p
+                    *ngIf="
+                      loginForm.get('email')?.hasError('required') &&
+                      (loginForm.get('email')?.dirty ||
+                        loginForm.get('email')?.touched)
+                    "
+                    class="text-danger"
+                  >
+                    L'email est obligatoire.
+                  </p>
+                  <p
+                    *ngIf="loginForm.get('email')?.hasError('email')"
+                    class="text-danger"
+                  >
+                    L'email doit avoir le bon format.
+                  </p>
+                </div>
+                <div class="mb-4">
+                  <c-input-group>
+                    <span cInputGroupText>
+                      <svg cIcon name="cilLockLocked"></svg>
+                    </span>
+
+                    <input
+                      autoComplete="current-password"
+                      formControlName="mdp"
+                      placeholder="Entrez votre mot de passe"
+                      type="password"
+                      class="form-control"
+                    />
+                  </c-input-group>
+                  @if(loginForm.get('mdp')?.hasError('required') &&
+                  (loginForm.get('mdp')?.dirty ||
+                  loginForm.get('mdp')?.touched)) {
+                  <p class="text-danger">Le mot de passe est obligatoire</p>
+                  }
+                </div>
+                @if(errorMessage) {
+                <p class="text-danger">{{ errorMessage }}</p>
+                }
+
+                <c-row>
+                  <c-col xs="12">
+                    <button
+                      type="submit"
+                      cButton
+                      class="px-4 form-control"
+                      color="primary"
+                    >
+                      @if(isLoading) {
+                      <c-spinner
+                        aria-hidden="true"
+                        size="sm"
+                        variant="grow"
+                      ></c-spinner>
+                      Loading... }@else{ Login }
+                    </button>
+                  </c-col>
+                  <c-col class="text-center" xs="12">
+                    <button
+                      type="button"
+                      cButton
+                      class="px-0"
+                      color="link"
+                      (click)="goToRegister()"
+                    >
+                      S'inscrire
+                    </button>
+                  </c-col>
+                </c-row>
+              </form>
+            </c-card-body>
+          </c-card>
+          <!-- <c-card [ngStyle]="{'width.%': 44}" class="text-white bg-primary py-5">
+              <c-card-body class="text-center">
+                <div>
+                  <h2>Sign up</h2>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.
+                  </p>
+                  <button cButton class="mt-3" color="primary" routerLink="/register">
+                    Register Now!
+                  </button>
+                </div>
+              </c-card-body>
+            </c-card> -->
+        </c-card-group>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

@@ -7,11 +7,10 @@ import { EmployeTravail } from '../../models/EmployeTravail'
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 export class ManagerService {
-
   private apiurl=`${environment.apiUrl}/api/managers`;
   // private apiurl='http://localhost:5000/api/managers';
   private headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
