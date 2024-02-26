@@ -81,11 +81,17 @@ const APP_CONTAINERS = [
     ToastrModule.forRoot()
   ],
   providers: [
+    // {
+    //   provide: [
+    //     LocationStrategy
+    //   ],
+    //   useClass: HashLocationStrategy
+    // },
     {
       provide: [
         LocationStrategy
       ],
-      useClass: HashLocationStrategy
+      useClass: PathLocationStrategy 
     },
     IconSetService,
     Title
