@@ -87,6 +87,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'rendezvous-form',
+        loadChildren: () =>
+          import('./views/rendezvous-form/rendezvous-form.module').then(
+            (m) => m.RendezvousFormModule
+          ),
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./views/dashboard/dashboard.module').then(
