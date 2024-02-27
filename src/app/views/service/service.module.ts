@@ -19,6 +19,8 @@ import { IconModule } from '@coreui/icons-angular';
 import { ServiceRoutingModule } from './service-routing.module';
 import { ServiceComponent } from './service.component';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [ServiceComponent],
   imports: [
@@ -36,7 +38,8 @@ import { ServiceComponent } from './service.component';
     AvatarModule,
     TableModule,
     ServiceRoutingModule,
-    SpinnerModule
+    SpinnerModule,
+    FontAwesomeModule 
   ],
 })
 export class ServiceModule {}

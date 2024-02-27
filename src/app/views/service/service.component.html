@@ -15,13 +15,29 @@
         <c-card textColor="dark" class="mb-3">
           <c-card-header class="d-flex justify-content-between">
             {{ service.nom }}
-            <svg
-              color
-              cIcon
-              [cIcon]="icons.cilHeart"
-              size="xl"
-              class="text-danger"
-            ></svg>
+            <button
+              class="icon-button"
+              *ngIf="!service.is_prefered"
+              (click)="onCreatePreference(service._id)"
+            >
+              <fa-icon
+                [icon]="icons.faRegularHeart"
+                class="text-danger"
+                size="lg"
+              ></fa-icon>
+            </button>
+
+            <button
+              class="icon-button"
+              *ngIf="service.is_prefered"
+              (click)="onDeletePreference(service._id)"
+            >
+              <fa-icon
+                [icon]="icons.faSolidHeart"
+                class="text-danger"
+                size="lg"
+              ></fa-icon>
+            </button>
           </c-card-header>
           <c-card-body>
             <c-row>

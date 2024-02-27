@@ -40,6 +40,7 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { tokenInterceptor } from './services/token.interceptor';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const APP_CONTAINERS = [
   DefaultFooterComponent,
@@ -79,7 +80,8 @@ const APP_CONTAINERS = [
     CardModule,
     NgScrollbarModule,
     CommonModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [
     // {

@@ -5,4 +5,5 @@ export interface Service {
   duree: number;
   commission: number;
   created_at: Date;
+  is_prefered?: boolean;
 }
