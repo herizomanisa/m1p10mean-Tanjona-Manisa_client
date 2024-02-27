@@ -114,4 +114,8 @@ export class ServiceComponent implements OnInit {
       this.isLoadingOnUpdate = false;
     }
   }
+
+  goToRDVForm(id_service: string): void {
+    this.route.navigate(['/rendezvous-form'], { queryParams: { id_service } });
+  }
 }

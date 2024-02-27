@@ -19,6 +19,7 @@
               class="icon-button"
               *ngIf="!service.is_prefered"
               (click)="onCreatePreference(service._id)"
+              aria-label="Ajouter au préféré"
             >
               <fa-icon
                 [icon]="icons.faRegularHeart"
@@ -31,6 +32,7 @@
               class="icon-button"
               *ngIf="service.is_prefered"
               (click)="onDeletePreference(service._id)"
+              aria-label="Supprimer des préférés"
             >
               <fa-icon
                 [icon]="icons.faSolidHeart"
@@ -50,7 +52,13 @@
                 ><p>{{ service.duree }} min</p></c-col
               >
             </c-row>
-            <button md="12" color="warning" class="form-control" cButton>
+            <button
+              md="12"
+              color="warning"
+              class="form-control"
+              cButton
+              (click)="goToRDVForm(service._id)"
+            >
               RDV
             </button>
           </c-card-body>
