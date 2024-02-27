@@ -6,6 +6,7 @@
       cHeaderToggler
       [cSidebarToggle]="sidebarId"
       class="ps-1"
+      aria-label="Toggle sidebar"
     >
       <svg cIcon name="cilMenu" size="lg"></svg>
     </button>
@@ -55,7 +56,7 @@
 
 <ng-template #userDropdown>
   <c-dropdown alignment="end" variant="nav-item">
-    <button cButton color="" [caret]="false" cDropdownToggle class="py-0">
+    <button cButton color="" [caret]="false" cDropdownToggle class="py-0" aria-label="Toggle image">
       <c-avatar
         cTextColor="primary"
         shape="rounded-1"
