@@ -8,4 +8,5 @@ export interface Customer {
   addresse: string | null;
   mdp: string;
   created_at: Date;
+  sexe: string;
 }

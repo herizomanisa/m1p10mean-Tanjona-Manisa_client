@@ -51,6 +51,7 @@ export class ClientRegisterComponent {
       {
         nom: ['', Validators.required],
         prenom: ['', Validators.required],
+        sexe: ['M', Validators.required],
         tel: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         addresse: [''],
@@ -77,6 +78,7 @@ export class ClientRegisterComponent {
           email: this.registerForm.value.email,
           addresse: this.registerForm.value.addresse,
           mdp: this.registerForm.value.mdp,
+          sexe: this.registerForm.value.sexe,
         })
         .subscribe({
           next: (
