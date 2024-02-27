@@ -12,6 +12,7 @@ interface CustomerForm {
   email: string;
   addresse: string | null;
   mdp: string;
+  sexe: string;
 }
 @Injectable({
   providedIn: 'root',

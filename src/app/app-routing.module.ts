@@ -145,6 +145,13 @@ const routes: Routes = [
             (m) => m.ServiceModule
           ),
       },
+      {
+        path: 'rendezvous-form',
+        loadChildren: () =>
+          import('./views/rendezvous-form/rendezvous-form.module').then(
+            (m) => m.RendezvousFormModule
+          ),
+      },
       // {
       //   path: 'dashboard',
       //   loadChildren: () =>

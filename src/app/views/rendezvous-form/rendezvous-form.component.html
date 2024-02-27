@@ -1,0 +1,116 @@
+<div *ngIf="isLoading" class="fade show spinner-container">
+  <i class="spinner-grow spinner-grow-sm"></i>
+  <span class="m-1">Loading...</span>
+</div>
+<c-card *ngIf="!isLoading" class="mb-4 border-warning">
+  <c-card-body>
+    <c-row>
+      <c-col sm="5">
+        <h4 class="card-title mb-0" id="traffic">Demande de RDV</h4>
+      </c-col>
+    </c-row>
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+        <form
+          cForm
+          [formGroup]="rendezvousForm"
+          (ngSubmit)="onSubmitRendezvousForm()"
+        >
+          <div class="mb-3">
+            <select
+              formControlName="id_service"
+              aria-label="Default select service"
+              cSelect
+            >
+              <option value="">Sélectionner un service</option>
+              <option
+                *ngFor="let service of listService; index as i"
+                [value]="service._id"
+              >
+                {{ service.nom }}
+              </option>
+            </select>
+            <p
+              *ngIf="
+                rendezvousForm.get('id_service')?.hasError('required') &&
+                (rendezvousForm.get('id_service')?.dirty ||
+                  rendezvousForm.get('id_service')?.touched)
+              "
+              class="text-danger"
+            >
+              Veuillez sélectionner un service
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <select
+              formControlName="id_employe"
+              aria-label="Default select employe"
+              cSelect
+            >
+              <option value="">Sélectionner un employé</option>
+              <option
+                *ngFor="let employe of listEmploye; index as i"
+                [value]="employe._id"
+              >
+                {{ employe.prenom }} {{ employe.nom }}
+              </option>
+            </select>
+            <p
+              *ngIf="
+                rendezvousForm.get('id_employe')?.hasError('required') &&
+                (rendezvousForm.get('id_employe')?.dirty ||
+                  rendezvousForm.get('id_employe')?.touched)
+              "
+              class="text-danger"
+            >
+              Veuillez sélectionner un employé
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <input
+              aria-label="Default select date"
+              type="datetime-local"
+              id="date_heure"
+              formControlName="date_heure"
+              class="form-control"
+              (ngModelChange)="checkDateHeure()"
+            />
+            <p
+              *ngIf="
+                rendezvousForm.get('date_heure')?.hasError('required') &&
+                (rendezvousForm.get('date_heure')?.dirty ||
+                  rendezvousForm.get('date_heure')?.touched)
+              "
+              class="text-danger"
+            >
+              Veuillez sélectionner une date
+            </p>
+            <p
+              *ngIf="
+                rendezvousForm.errors?.['currentOrFutureDate'] &&
+                rendezvousForm.get('date_heure')?.dirty
+              "
+              class="text-danger"
+            >
+              La date doit être supérieure à la date et heure actuelle
+            </p>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" cButton color="success">
+              @if(isLoading) {
+              <c-spinner
+                aria-hidden="true"
+                size="sm"
+                variant="grow"
+              ></c-spinner>
+              Loading... }@else{ Soumettre la demande }
+            </button>
+          </div>
+        </form>
+      </c-col>
+    </c-row>
+  </c-card-body>
+</c-card>
