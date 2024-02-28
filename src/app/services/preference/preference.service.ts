@@ -40,6 +40,17 @@ export class PreferenceService {
     );
   }
 
+  getAllEmploye(): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.preferences_apiurl}/all-employes`,
+      {
+        headers: this.getHeaders(
+          this.localStorageService.getData('x-authorization-c-token')
+        ),
+      }
+    );
+  }
+
   createPreference(data: PreferenceForm): Observable<ResponseData<any>> {
     return this.http.post<ResponseData<any>>(
       `${this.preferences_apiurl}/`,

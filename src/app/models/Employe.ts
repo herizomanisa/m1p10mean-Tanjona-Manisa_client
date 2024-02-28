@@ -11,4 +11,6 @@ export interface Employe {
   heure_fin: string;
   is_activated: number;
   created_at: Date;
+  sexe: string;
+  is_prefered?: boolean;
 }

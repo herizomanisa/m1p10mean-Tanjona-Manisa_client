@@ -1,1 +1,69 @@
-<p>employe-client-list works!</p>
+<div *ngIf="isLoading" class="fade show spinner-container">
+  <i class="spinner-grow spinner-grow-sm"></i>
+  <span class="m-1">Loading...</span>
+</div>
+<c-card *ngIf="!isLoading" class="mb-4 border-danger">
+  <c-card-body>
+    <c-row>
+      <c-col sm="5">
+        <h4 class="card-title mb-5" id="traffic">Liste des employés</h4>
+      </c-col>
+    </c-row>
+    <c-row>
+      <c-col *ngFor="let employe of listEmploye; index as i" lg="4">
+        <c-card textColor="dark" class="mb-3">
+          <c-card-header class="d-flex justify-content-between">
+            {{ employe.nom }} {{ employe.prenom }}
+            <button
+              class="icon-button"
+              *ngIf="!employe.is_prefered"
+              (click)="onCreatePreference(employe._id)"
+              aria-label="Ajouter au préféré"
+            >
+              <fa-icon
+                [icon]="icons.faRegularHeart"
+                class="text-danger"
+                size="lg"
+              ></fa-icon>
+            </button>
+
+            <button
+              class="icon-button"
+              *ngIf="employe.is_prefered"
+              (click)="onDeletePreference(employe._id)"
+              aria-label="Supprimer des préférés"
+            >
+              <fa-icon
+                [icon]="icons.faSolidHeart"
+                class="text-danger"
+                size="lg"
+              ></fa-icon>
+            </button>
+          </c-card-header>
+          <c-card-body>
+            <c-row>
+              <c-col md="6"><h5 cCardTitle>Sexe:</h5></c-col>
+              <c-col md="6"
+                ><p *ngIf="employe.sexe === 'M'">Homme</p>
+                <p *ngIf="employe.sexe === 'F'">Femme</p></c-col
+              >
+              <c-col md="6"><h5 cCardTitle>Numéro:</h5></c-col>
+              <c-col md="6"
+                ><p>{{ employe.tel }}</p></c-col
+              >
+            </c-row>
+            <button
+              md="12"
+              color="danger"
+              class="form-control"
+              cButton
+              (click)="goToRDVForm(employe._id)"
+            >
+              RDV
+            </button>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-card-body>
+</c-card>
