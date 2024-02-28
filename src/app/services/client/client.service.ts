@@ -33,11 +33,8 @@ export class ClientService {
     });
   }
 
-  async login(
-    email: string,
-    mdp: string
-  ): Promise<Observable<ResponseData<String>>> {
-    return await this.http.post<ResponseData<String>>(
+  login(email: string, mdp: string): Observable<ResponseData<String>> {
+    return this.http.post<ResponseData<String>>(
       `${this.customers_apiurl}/login`,
       { email, mdp }
     );

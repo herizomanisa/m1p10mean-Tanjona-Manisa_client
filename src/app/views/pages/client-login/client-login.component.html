@@ -68,14 +68,17 @@
                       cButton
                       class="px-4 form-control"
                       color="primary"
+                      [disabled]="isLoading"
                     >
-                      @if(isLoading) {
+                      
                       <c-spinner
                         aria-hidden="true"
                         size="sm"
                         variant="grow"
+                        *ngIf="isLoading"
                       ></c-spinner>
-                      Loading... }@else{ Login }
+                      
+                      <span *ngIf="!isLoading">Login</span>
                     </button>
                   </c-col>
                   <c-col class="text-center" xs="12">
