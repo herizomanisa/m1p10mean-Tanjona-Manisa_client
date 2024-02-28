@@ -6,10 +6,10 @@ import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import { LocalStorageService } from 'src/app/services/storage/local-storage.service';
 
 @Component({
-  selector: 'app-default-header',
+  selector: 'app-default-header-employe',
   templateUrl: './default-header.component.html',
 })
-export class DefaultHeaderComponent extends HeaderComponent {
+export class DefaultHeaderEmployeComponent extends HeaderComponent {
   @Input() sidebarId: string = 'sidebar';
 
   @Input() token: string | null = '';
@@ -27,7 +27,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   logOut(): void {
-    this.localStorageService.clearData();
-    this.route.navigate(['/client/login']);
+    this.localStorageService.removeData("x-authorization-e-token");
+    this.route.navigate(['/employe/login']);
   }
 }

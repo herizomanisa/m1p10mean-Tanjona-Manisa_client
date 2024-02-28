@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Import containers
-import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutClientComponent, DefaultLayoutComponent, DefaultLayoutEmployeComponent } from './containers';
+import { DefaultFooterComponent, DefaultHeaderComponent, DefaultHeaderClientComponent, DefaultLayoutClientComponent, DefaultLayoutComponent, DefaultLayoutEmployeComponent, DefaultHeaderEmployeComponent } from './containers';
 
 import {
   AvatarModule,
@@ -45,6 +45,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
+  DefaultHeaderClientComponent,
+  DefaultHeaderEmployeComponent,
   DefaultLayoutComponent,
   DefaultLayoutClientComponent,
   DefaultLayoutEmployeComponent

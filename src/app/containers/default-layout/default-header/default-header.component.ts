@@ -27,7 +27,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   logOut(): void {
-    this.localStorageService.clearData();
-    this.route.navigate(['/client/login']);
+    this.localStorageService.removeData("x-authorization-m-token");
+    this.route.navigate(['/login']);
   }
 }
