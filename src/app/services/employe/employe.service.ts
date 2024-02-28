@@ -23,8 +23,24 @@ export class EmployeService {
     });
   }
 
+  async login(
+    email: string,
+    mdp: string
+  ): Promise<Observable<ResponseData<String>>> {
+    return await this.http.post<ResponseData<String>>(
+      `${this.employes_apiurl}/login`,
+      { email, mdp }
+    );
+  }
+
   getEmploye(token: string): Observable<ResponseData<any>> {
     return this.http.get<ResponseData<any>>(`${this.employes_apiurl}/list`, {
+      headers: this.getHeaders(token),
+    });
+  }
+
+  getEmployeActif(token: string): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(`${this.employes_apiurl}/list/activated`, {
       headers: this.getHeaders(token),
     });
   }

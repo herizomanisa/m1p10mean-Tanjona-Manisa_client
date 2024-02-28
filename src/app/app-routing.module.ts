@@ -3,16 +3,19 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DefaultLayoutComponent } from './containers';
 import { DefaultLayoutClientComponent } from './containers';
+import { DefaultLayoutEmployeComponent } from './containers';
 import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { ClientLoginComponent } from './views/pages/client-login/client-login.component';
+import { EmployeLoginComponent } from './views/pages/employe-login/employe-login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { ClientRegisterComponent } from './views/pages/client-register/client-register.component';
 
 import {
   canActivate,
   canActivateClient,
+  canActivateEmploye,
 } from './services/guard/auth_guard.service';
 
 const routes: Routes = [
@@ -28,6 +31,13 @@ const routes: Routes = [
     component: ClientLoginComponent,
     data: {
       title: 'Client Login Page',
+    },
+  },
+  {
+    path: 'employe/login',
+    component: EmployeLoginComponent,
+    data: {
+      title: 'Employe Login Page',
     },
   },
   {
@@ -153,6 +163,36 @@ const routes: Routes = [
     path: '',
     redirectTo: '',
     pathMatch: 'full',
+  },
+
+  // Employe route
+  {
+    path: 'employe',
+    redirectTo: 'employe/rendezvous',
+    pathMatch: 'full',
+  },
+
+  {
+    path: 'employe',
+    component: DefaultLayoutEmployeComponent,
+    canActivate: [canActivateEmploye],
+    data: {
+      title: 'Home',
+    },
+    // children: [
+    //   {
+    //     path: 'dashboard',
+    //     loadChildren: () =>
+    //       import('./views/dashboard/dashboard.module').then(
+    //         (m) => m.DashboardModule
+    //       ),
+    //   },
+    //   {
+    //     path: 'service',
+    //     loadChildren: () =>
+    //       import('./views/admin/admin.module').then((m) => m.AdminModule),
+    //   },
+    // ],
   },
 
   // {

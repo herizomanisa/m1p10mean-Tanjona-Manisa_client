@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Import containers
-import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutClientComponent, DefaultLayoutComponent } from './containers';
+import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutClientComponent, DefaultLayoutComponent, DefaultLayoutEmployeComponent } from './containers';
 
 import {
   AvatarModule,
@@ -46,7 +46,8 @@ const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
   DefaultLayoutComponent,
-  DefaultLayoutClientComponent
+  DefaultLayoutClientComponent,
+  DefaultLayoutEmployeComponent
 ];
 
 @NgModule({

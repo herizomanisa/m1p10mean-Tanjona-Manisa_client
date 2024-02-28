@@ -1,0 +1,91 @@
+<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col md="8">
+        <c-card-group>
+          <c-card class="p-4">
+            <c-card-body>
+              <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+                <h1>Login</h1>
+                <p class="text-medium-emphasis">Sign In to your account</p>
+                <div class="mb-3">
+                  <c-input-group>
+                    <span cInputGroupText>
+                      <svg cIcon name="cil-envelope-closed"></svg>
+                    </span>
+                    <input
+                      autoComplete="email"
+                      formControlName="email"
+                      placeholder="Entrez votre email"
+                      class="form-control"
+                    />
+                  </c-input-group>
+                  <p
+                    *ngIf="
+                      loginForm.get('email')?.hasError('required') &&
+                      (loginForm.get('email')?.dirty ||
+                        loginForm.get('email')?.touched)
+                    "
+                    class="text-danger"
+                  >
+                    L'email est obligatoire.
+                  </p>
+                  <p
+                    *ngIf="loginForm.get('email')?.hasError('email')"
+                    class="text-danger"
+                  >
+                    L'email doit avoir le bon format.
+                  </p>
+                </div>
+                <div class="mb-4">
+                  <c-input-group>
+                    <span cInputGroupText>
+                      <svg cIcon name="cilLockLocked"></svg>
+                    </span>
+
+                    <input
+                      autoComplete="current-password"
+                      formControlName="mdp"
+                      placeholder="Entrez votre mot de passe"
+                      type="password"
+                      class="form-control"
+                    />
+                  </c-input-group>
+                  @if(loginForm.get('mdp')?.hasError('required') &&
+                  (loginForm.get('mdp')?.dirty ||
+                  loginForm.get('mdp')?.touched)) {
+                  <p class="text-danger">Le mot de passe est obligatoire</p>
+                  }
+                </div>
+                @if(errorMessage) {
+                <p class="text-danger">{{ errorMessage }}</p>
+                }
+
+                <c-row>
+                  <c-col xs="12">
+                    <button
+                      type="submit"
+                      cButton
+                      class="px-4 form-control"
+                      color="primary"
+                      [disabled]="isLoading"
+                    >
+                      <c-spinner
+                        aria-hidden="true"
+                        size="sm"
+                        variant="grow"
+                        *ngIf="isLoading"
+                      ></c-spinner>
+
+                      <span *ngIf="!isLoading">Login</span>
+                    </button>
+                  </c-col>
+                </c-row>
+              </form>
+            </c-card-body>
+          </c-card>
+        </c-card-group>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>
