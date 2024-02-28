@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResponseData } from '../../models/ResponseData';
 import { environment } from '../../../environments/environment';
+import { LocalStorageService } from '../storage/local-storage.service';
 
 interface CustomerForm {
   image: string | null;
@@ -20,9 +21,12 @@ interface CustomerForm {
 export class ClientService {
   private customers_apiurl = `${environment.apiUrl}/api/customers`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private localStorageService: LocalStorageService
+  ) {}
 
-  private getHeaders(token: string): HttpHeaders {
+  private getHeaders(token: string | null): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -43,6 +47,17 @@ export class ClientService {
     return this.http.post<ResponseData<String>>(
       `${this.customers_apiurl}/create`,
       data
+    );
+  }
+
+  getHistoryRendezvous(): Observable<any> {
+    return this.http.get<ResponseData<String>>(
+      `${this.customers_apiurl}/history/rendezvous`,
+      {
+        headers: this.getHeaders(
+          this.localStorageService.getData('x-authorization-c-token')
+        ),
+      }
     );
   }
 }

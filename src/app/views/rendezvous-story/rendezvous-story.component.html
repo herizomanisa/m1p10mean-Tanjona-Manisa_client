@@ -1,0 +1,149 @@
+<div *ngIf="isLoading" class="fade show spinner-container">
+  <i class="spinner-grow spinner-grow-sm"></i>
+  <span class="m-1">Loading...</span>
+</div>
+<c-card *ngIf="!isLoading" class="mb-4 border-warning">
+  <c-card-body>
+    <c-row>
+      <c-col sm="5">
+        <h4 class="card-title mb-5" id="traffic">Historique de rendez-vous</h4>
+      </c-col>
+    </c-row>
+    <c-row class="d-flex justify-content-center">
+      <c-col md="12" *ngFor="let rendezvous of listRendezvous; index as i">
+        <c-alert color="success" *ngIf="rendezvous.status === 'paid'">
+          <c-row>
+            <c-col md="12">
+              <div class="table-responsive d-flex justify-content-center">
+                <table>
+                  <tr>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="statusLabel">
+                          <fa-icon
+                            [icon]="icons.faCheck"
+                            class="text-success"
+                            size="lg"
+                          ></fa-icon>
+                          Payé
+                        </div>
+                        <label cLabel for="statusLabel">Status</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="floatingDateLabel">
+                          {{ formatDate(rendezvous.date_heure) }}
+                        </div>
+                        <label cLabel for="floatingDateLabel">Date</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="serviceNomLabel">
+                          {{ rendezvous?.service?.nom }}
+                        </div>
+                        <label cLabel for="serviceNomLabel">Service</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="serviceDureeLabel">
+                          {{ rendezvous?.service?.duree }} min
+                        </div>
+                        <label cLabel for="serviceDureeLabel">Durée</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="servicePrixLabel">
+                          {{ rendezvous?.service?.prix }} Ar
+                        </div>
+                        <label cLabel for="servicePrixLabel">Prix</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="employeLabel">
+                          {{ rendezvous?.employe?.prenom }}
+                          {{ rendezvous?.employe?.nom }}
+                        </div>
+                        <label cLabel for="employeLabel">Employe</label>
+                      </form>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </c-col>
+          </c-row>
+        </c-alert>
+        <c-alert color="warning" *ngIf="rendezvous.status === 'not paid'">
+          <c-row>
+            <c-col md="12">
+              <div class="table-responsive d-flex justify-content-center">
+                <table>
+                  <tr>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="statusLabel">
+                          <fa-icon
+                            [icon]="icons.faExclamationTriangle"
+                            class="text-warning"
+                            size="lg"
+                          ></fa-icon>
+                          Non payé
+                        </div>
+                        <label cLabel for="statusLabel">Status</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="floatingDateLabel">
+                          {{ formatDate(rendezvous.date_heure) }}
+                        </div>
+                        <label cLabel for="floatingDateLabel">Date</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="serviceNomLabel">
+                          {{ rendezvous?.service?.nom }}
+                        </div>
+                        <label cLabel for="serviceNomLabel">Service</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="serviceDureeLabel">
+                          {{ rendezvous?.service?.duree }} min
+                        </div>
+                        <label cLabel for="serviceDureeLabel">Durée</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="servicePrixLabel">
+                          {{ rendezvous?.service?.prix }} Ar
+                        </div>
+                        <label cLabel for="servicePrixLabel">Prix</label>
+                      </form>
+                    </td>
+                    <td>
+                      <form cFormFloating>
+                        <div class="form-control" id="employeLabel">
+                          {{ rendezvous?.employe?.prenom }}
+                          {{ rendezvous?.employe?.nom }}
+                        </div>
+                        <label cLabel for="employeLabel">Employe</label>
+                      </form>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </c-col>
+          </c-row>
+        </c-alert>
+      </c-col>
+    </c-row>
+  </c-card-body>
+</c-card>
