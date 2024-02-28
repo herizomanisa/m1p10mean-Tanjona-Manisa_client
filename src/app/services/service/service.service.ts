@@ -18,6 +18,7 @@ interface ServiceForm {
 })
 export class ServiceService {
   private services_apiurl = `${environment.apiUrl}/api/services`;
+  private headers_admin = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
 
   constructor(private http: HttpClient) {}
 
@@ -32,38 +33,37 @@ export class ServiceService {
     return this.http.get<ResponseData<any>>(`${this.services_apiurl}/list`);
   }
 
-  getServiceById(id: number): Observable<ResponseData<any>> {
+  getServiceById(id: string): Observable<ResponseData<any>> {
     return this.http.get<ResponseData<any>>(
       `${this.services_apiurl}/service/${id}`
     );
   }
 
   updateService(
-    id: number,
-    data: Service,
-    token: string
+    id: string,
+    data: Service
   ): Observable<ResponseData<any>> {
     return this.http.put<ResponseData<any>>(
       `${this.services_apiurl}/service/${id}`,
       data,
-      { headers: this.getHeaders(token) }
+      { headers: this.headers_admin }
     );
   }
 
-  deleteService(id: number): Observable<ResponseData<any>> {
+  deleteService(id: string): Observable<ResponseData<any>> {
     return this.http.delete<ResponseData<any>>(
-      `${this.services_apiurl}/service/${id}`
+      `${this.services_apiurl}/service/${id}`,
+      { headers: this.headers_admin}
     );
   }
 
   createService(
-    data: ServiceForm,
-    token: string
+    data: ServiceForm
   ): Observable<ResponseData<any>> {
     return this.http.post<ResponseData<any>>(
       `${this.services_apiurl}/create`,
       data,
-      { headers: this.getHeaders(token) }
+      { headers: this.headers_admin}
     );
   }
 }

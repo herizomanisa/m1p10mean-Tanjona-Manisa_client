@@ -1,0 +1,234 @@
+<c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Gestion des services</strong>
+        </c-card-header>
+        <c-card-body>
+          <!-- <p class="text-medium-emphasis small">
+            Click the accordions below to expand/collapse the accordion content.
+          </p> -->
+          <div style="display: flex; justify-content: flex-end;">
+            <button [cModalToggle]="createModal.id" cButton color="success" class="text-white">
+              <fa-icon
+                [icon]="icons"
+                size="lg"
+              ></fa-icon>
+              Add
+            </button>
+          </div>
+            <!-- Table list of services -->
+            <div *ngIf="is_loading" class="d-flex justify-content-center">
+              <span><c-spinner color="secondary" size="sm"></c-spinner> loading...</span>
+            </div>
+            <table *ngIf="!is_loading" [hover]="true" cTable>
+              <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prix (en Ariary)</th>
+                <th scope="col">Duree (en minute)</th>
+                <th scope="col">Commission (en %)</th>
+                <th></th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let service of list_service; index as i">
+                <td>{{service.nom}}</td>
+                <td>{{service.prix}} Ar</td>
+                <td>{{service.duree}} mn</td>
+                <td>{{service.commission}}%</td>
+                <td class="col-1">
+                  <button cButton class="me-1" variant="outline" color="info"
+                    (click)="onUpdateService(service._id)"
+                    [cModalToggle]="updateModal.id">
+                    <svg cIcon name="cil-pencil" size="xl"></svg>
+                  </button>
+                </td>
+                <td class="col-1">
+                  <button cButton class="me-1" variant="outline" color="danger" 
+                    (click)="onDeleteService(service._id, service.nom)"
+                    [cModalToggle]="deleteModal.id">
+                    <svg cIcon name="cil-trash" size="xl"></svg>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>
+
+  <!-- Modal for creation -->
+  <c-modal #createModal
+          [scrollable]="true"
+          alignment="center"
+          id="createModal">
+  <c-modal-header>
+    <h5 cModalTitle>Create Service</h5>
+    <button [cModalToggle]="createModal.id" cButtonClose></button>
+  </c-modal-header>
+  <form [formGroup]="createForm" (ngSubmit)="onCreateSubmit()" cForm>
+  <c-modal-body>
+    
+      <div class="mb-3">
+        <label cLabel for="nomFrom">Nom</label>
+        <input cFormControl
+                id="nomFrom"
+                placeholder="nom"
+                type="text"
+                formControlName="nom"
+        />
+        @if(createForm.get('nom')?.hasError('required') && createForm.get('nom')?.touched) {
+          <p class="text-danger">nom is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="PrixFrom">Prix</label>
+        <input cFormControl
+                id="PrixFrom"
+                placeholder="Ariary"
+                type="number"
+                formControlName="prix"
+                min="1"
+        />
+        @if(createForm.get('prix')?.hasError('required') && createForm.get('prix')?.touched) {
+          <p class="text-danger">prix is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="DureeFrom">Duree</label>
+        <input cFormControl
+                id="DureeFrom"
+                placeholder="Minutes"
+                type="number"
+                formControlName="duree"
+                min="1"
+        />
+        @if(createForm.get('duree')?.hasError('required') && createForm.get('duree')?.touched) {
+          <p class="text-danger">duree is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="CommissionFrom">Commission</label>
+        <input cFormControl
+                id="CommissionFrom"
+                placeholder="%"
+                type="number"
+                formControlName="commission"
+                min="1"
+                max="100"
+        />
+        @if(createForm.get('commission')?.hasError('required') && createForm.get('commission')?.touched) {
+          <p class="text-danger">duree is required</p>
+        }
+      </div>
+    
+  </c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="createModal.id" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary" type="submit">Create</button>
+  </c-modal-footer>
+</form>
+</c-modal>
+<!--  -->
+
+<!-- Modal for update -->
+<c-modal #updateModal
+  [scrollable]="true"
+  alignment="center"
+  id="updateModal">
+  <c-modal-header>
+    <h5 cModalTitle>Update Service</h5>
+    <button [cModalToggle]="updateModal.id" cButtonClose></button>
+  </c-modal-header>
+    <form [formGroup]="updateForm" (ngSubmit)="onUpdateSubmit(_id)" cForm>
+    <c-modal-body>
+
+      <div class="mb-3">
+      <label cLabel for="nomFrom">Nom</label>
+      <input cFormControl
+            id="nomFrom"
+            placeholder="nom"
+            type="text"
+            formControlName="nom"
+      />
+      @if(updateForm.get('nom')?.hasError('required') && updateForm.get('nom')?.touched) {
+      <p class="text-danger">nom is required</p>
+      }
+      </div>
+      <div class="mb-3">
+      <label cLabel for="PrixFrom">Prix</label>
+      <input cFormControl
+            id="PrixFrom"
+            placeholder="Ariary"
+            type="number"
+            formControlName="prix"
+            min="1"
+      />
+      @if(updateForm.get('prix')?.hasError('required') && updateForm.get('prix')?.touched) {
+      <p class="text-danger">prix is required</p>
+      }
+      </div>
+      <div class="mb-3">
+      <label cLabel for="DureeFrom">Duree</label>
+      <input cFormControl
+            id="DureeFrom"
+            placeholder="Minutes"
+            type="number"
+            formControlName="duree"
+            min="1"
+      />
+      @if(updateForm.get('duree')?.hasError('required') && updateForm.get('duree')?.touched) {
+      <p class="text-danger">duree is required</p>
+      }
+      </div>
+      <div class="mb-3">
+      <label cLabel for="CommissionFrom">Commission</label>
+      <input cFormControl
+            id="CommissionFrom"
+            placeholder="%"
+            type="number"
+            formControlName="commission"
+            min="1"
+            max="100"
+      />
+      @if(updateForm.get('commission')?.hasError('required') && updateForm.get('commission')?.touched) {
+      <p class="text-danger">duree is required</p>
+      }
+      </div>
+
+    </c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="updateModal.id" cButton color="secondary">
+      Close
+      </button>
+      <button cButton color="primary" type="submit">Update</button>
+    </c-modal-footer>
+  </form>
+</c-modal>
+<!--  -->
+
+<!-- Modal delete -->
+<c-modal #deleteModal
+  [scrollable]="false"
+  alignment="center"
+  id="deleteModal">
+  <c-modal-header>
+    <h5 cModalTitle><span class="text-danger">Attention!</span></h5>
+    <button [cModalToggle]="deleteModal.id" cButtonClose></button>
+  </c-modal-header>
+    <c-modal-body>
+        <h3>Cette action est irreversible</h3>
+        <p>Etes vous sure de vouloir supprimer le service <span class="text-info">{{nomService}}</span>?</p>
+    </c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="deleteModal.id" cButton color="secondary">
+      Non
+      </button>
+      <button cButton color="danger" type="submit" (click)="onDeleteSubmit(_id)">Oui</button>
+    </c-modal-footer>
+</c-modal>

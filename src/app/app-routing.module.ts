@@ -16,12 +16,6 @@ import {
 } from './services/guard/auth_guard.service';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'dashboard',
-  //   canActivate: [AuthGuardService],
-  //   pathMatch: 'full'
-  // },
   {
     path: 'login',
     component: LoginComponent,
@@ -52,6 +46,11 @@ const routes: Routes = [
   },
 
   // Admin route
+  {
+    path: 'admin',
+    redirectTo: 'admin/dashboard',
+    pathMatch: 'full',
+  },
 
   {
     path: 'admin',
@@ -68,6 +67,11 @@ const routes: Routes = [
             (m) => m.DashboardModule
           ),
       },
+      {
+        path: 'service',
+        loadChildren: () =>
+          import('./views/admin/admin.module').then((m) => m.AdminModule),
+      },
     ],
   },
 
@@ -83,7 +87,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: '',
+        path: 'service',
         loadChildren: () =>
           import('./views/service/service.module').then((m) => m.ServiceModule),
       },
@@ -140,6 +144,92 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/pages/pages.module').then((m) => m.PagesModule),
       },
+    ],
+  },
+
+  // client route
+
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
+
+  {
+    path: '',
+    component: DefaultLayoutClientComponent,
+    canActivate: [canActivateClient],
+    data: {
+      expectedRole: 'customer',
+      title: 'Home',
+    },
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./views/service/service.module').then((m) => m.ServiceModule),
+      },
+      {
+        path: 'rendezvous-form',
+        loadChildren: () =>
+          import('./views/rendezvous-form/rendezvous-form.module').then(
+            (m) => m.RendezvousFormModule
+          ),
+      },
+      // {
+      //   path: 'dashboard',
+      //   loadChildren: () =>
+      //     import('./views/dashboard/dashboard.module').then(
+      //       (m) => m.DashboardModule
+      //     ),
+      // },
+      // {
+      //   path: 'theme',
+      //   loadChildren: () =>
+      //     import('./views/theme/theme.module').then((m) => m.ThemeModule),
+      // },
+      // {
+      //   path: 'base',
+      //   loadChildren: () =>
+      //     import('./views/base/base.module').then((m) => m.BaseModule),
+      // },
+      // {
+      //   path: 'buttons',
+      //   loadChildren: () =>
+      //     import('./views/buttons/buttons.module').then((m) => m.ButtonsModule),
+      // },
+      // {
+      //   path: 'forms',
+      //   loadChildren: () =>
+      //     import('./views/forms/forms.module').then((m) => m.CoreUIFormsModule),
+      // },
+      // {
+      //   path: 'charts',
+      //   loadChildren: () =>
+      //     import('./views/charts/charts.module').then((m) => m.ChartsModule),
+      // },
+      // {
+      //   path: 'icons',
+      //   loadChildren: () =>
+      //     import('./views/icons/icons.module').then((m) => m.IconsModule),
+      // },
+      // {
+      //   path: 'notifications',
+      //   loadChildren: () =>
+      //     import('./views/notifications/notifications.module').then(
+      //       (m) => m.NotificationsModule
+      //     ),
+      // },
+      // {
+      //   path: 'widgets',
+      //   loadChildren: () =>
+      //     import('./views/widgets/widgets.module').then((m) => m.WidgetsModule),
+      // },
+      // {
+      //   path: 'pages',
+      //   loadChildren: () =>
+      //     import('./views/pages/pages.module').then((m) => m.PagesModule),
+      // },
     ],
   },
   {
