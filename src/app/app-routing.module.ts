@@ -10,7 +10,10 @@ import { ClientLoginComponent } from './views/pages/client-login/client-login.co
 import { RegisterComponent } from './views/pages/register/register.component';
 import { ClientRegisterComponent } from './views/pages/client-register/client-register.component';
 
-import { canActivate, canActivateClient } from './services/guard/auth_guard.service';
+import {
+  canActivate,
+  canActivateClient,
+} from './services/guard/auth_guard.service';
 
 const routes: Routes = [
   // {
@@ -69,7 +72,7 @@ const routes: Routes = [
   },
 
   // client route
-  
+
   {
     path: '',
     component: DefaultLayoutClientComponent,
@@ -82,15 +85,27 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./views/service/service.module').then(
-            (m) => m.ServiceModule
-          ),
+          import('./views/service/service.module').then((m) => m.ServiceModule),
       },
       {
         path: 'rendezvous-form',
         loadChildren: () =>
           import('./views/rendezvous-form/rendezvous-form.module').then(
             (m) => m.RendezvousFormModule
+          ),
+      },
+      {
+        path: 'rendezvous-story',
+        loadChildren: () =>
+          import('./views/rendezvous-story/rendezvous-story.module').then(
+            (m) => m.RendezvousStoryModule
+          ),
+      },
+      {
+        path: 'employe-list',
+        loadChildren: () =>
+          import('./views/employe-client-list/employe-client-list.module').then(
+            (m) => m.EmployeClientListModule
           ),
       },
       {
@@ -106,21 +121,6 @@ const routes: Routes = [
           import('./views/theme/theme.module').then((m) => m.ThemeModule),
       },
       {
-        path: 'base',
-        loadChildren: () =>
-          import('./views/base/base.module').then((m) => m.BaseModule),
-      },
-      {
-        path: 'buttons',
-        loadChildren: () =>
-          import('./views/buttons/buttons.module').then((m) => m.ButtonsModule),
-      },
-      {
-        path: 'forms',
-        loadChildren: () =>
-          import('./views/forms/forms.module').then((m) => m.CoreUIFormsModule),
-      },
-      {
         path: 'charts',
         loadChildren: () =>
           import('./views/charts/charts.module').then((m) => m.ChartsModule),
@@ -129,13 +129,6 @@ const routes: Routes = [
         path: 'icons',
         loadChildren: () =>
           import('./views/icons/icons.module').then((m) => m.IconsModule),
-      },
-      {
-        path: 'notifications',
-        loadChildren: () =>
-          import('./views/notifications/notifications.module').then(
-            (m) => m.NotificationsModule
-          ),
       },
       {
         path: 'widgets',
@@ -164,7 +157,7 @@ const routes: Routes = [
     },
   },
 
-  {path: '**', redirectTo: '404'}
+  { path: '**', redirectTo: '404' },
 ];
 
 @NgModule({
