@@ -8,12 +8,12 @@ export const navItemsClient: INavData[] = [
   },
   {
     name: 'Liste des employés',
-    url: '/',
+    url: '/employe-list',
     iconComponent: { name: 'cil-people' },
   },
   {
     name: 'Mes rendez-vous',
-    url: '/',
+    url: '/rendezvous-story',
     iconComponent: { name: 'cil-calendar' },
   },
   {

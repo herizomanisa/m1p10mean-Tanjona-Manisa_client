@@ -29,6 +29,7 @@ export class RendezvousFormComponent implements OnInit {
   errorMessage: string | undefined;
 
   id_service: string = '';
+  id_employe: string = '';
 
   constructor(
     private serviceService: ServiceService,
@@ -45,7 +46,8 @@ export class RendezvousFormComponent implements OnInit {
     this.initData();
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.id_service = params.get('id_service') || '';
-      this.initializeForm(this.id_service);
+      this.id_employe = params.get('id_employe') || '';
+      this.initializeForm(this.id_service, this.id_employe);
     });
   }
 
@@ -65,10 +67,10 @@ export class RendezvousFormComponent implements OnInit {
     }
   }
 
-  initializeForm(id_service: string): void {
+  initializeForm(id_service: string, id_employe: string): void {
     this.rendezvousForm = this.fb.group({
       id_service: [id_service, Validators.required],
-      id_employe: ['', Validators.required],
+      id_employe: [id_employe, Validators.required],
       date_heure: [
         '',
         [Validators.required, this.currentOrFutureDateValidator],

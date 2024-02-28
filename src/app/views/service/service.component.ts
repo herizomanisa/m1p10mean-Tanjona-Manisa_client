@@ -32,7 +32,7 @@ export class ServiceComponent implements OnInit {
   }
 
   initData(): void {
-    this.fetchListServiceEmploye();
+    this.fetchListServicePlusPreference();
   }
 
   fetchListService(): void {
@@ -53,7 +53,7 @@ export class ServiceComponent implements OnInit {
     }
   }
 
-  fetchListServiceEmploye(): void {
+  fetchListServicePlusPreference(): void {
     this.isLoading = true;
     try {
       this.preferenceService.getAllService().subscribe({
@@ -84,7 +84,7 @@ export class ServiceComponent implements OnInit {
       };
       this.preferenceService.createPreference(data).subscribe({
         next: () => {
-          this.fetchListServiceEmploye();
+          this.fetchListServicePlusPreference();
         },
         error: (error) => {
           console.log(error);
@@ -102,7 +102,7 @@ export class ServiceComponent implements OnInit {
     try {
       this.preferenceService.findAndDeletePreference(id, 'service').subscribe({
         next: () => {
-          this.fetchListServiceEmploye();
+          this.fetchListServicePlusPreference();
         },
         error: (error) => {
           console.log(error);
