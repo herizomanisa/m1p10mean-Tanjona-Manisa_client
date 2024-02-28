@@ -90,15 +90,15 @@ export class RendezvousFormComponent implements OnInit {
       this.employeService.getEmploye(this.token).subscribe({
         next: (response) => {
           this.listEmploye = response.details;
+          this.isLoading = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoading = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoading = false;
     }
   }
 
@@ -108,15 +108,15 @@ export class RendezvousFormComponent implements OnInit {
       this.serviceService.getService().subscribe({
         next: (response) => {
           this.listService = response.details;
+          this.isLoading = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoading = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoading = false;
     }
   }
 
