@@ -43,20 +43,24 @@
           </div>
 
           <div class="mb-3">
-            <select
-              formControlName="id_employe"
-              aria-label="Default select employe"
-              cSelect
-            >
-              <option value="">Sélectionner un employé</option>
-              <option
-                *ngFor="let employe of listEmploye; index as i"
-                [value]="employe._id"
+            <form cFormFloating>
+              <select
+                formControlName="id_employe"
+                aria-label="Default select employe"
+                cSelect
               >
-                {{ employe.prenom }} {{ employe.nom }}
-              </option>
-            </select>
-            <p
+                <option value="">Sélectionner un employé</option>
+                <option
+                  *ngFor="let employe of listEmploye; index as i"
+                  [value]="employe._id"
+                >
+                  {{ employe.prenom }} {{ employe.nom }}
+                </option>
+              </select>
+              <label cLabel for="id_employe">Facultatif</label>
+            </form>
+
+            <!-- <p
               *ngIf="
                 rendezvousForm.get('id_employe')?.hasError('required') &&
                 (rendezvousForm.get('id_employe')?.dirty ||
@@ -65,7 +69,7 @@
               class="text-danger"
             >
               Veuillez sélectionner un employé
-            </p>
+            </p> -->
           </div>
 
           <div class="mb-3">
