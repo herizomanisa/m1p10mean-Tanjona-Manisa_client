@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit{
             const rep: string= result.details as string;
             if(rep !== null) {
               localStorage.setItem('x-authorization-m-token', rep);
-              this.route.navigate(['/dashboard']);
+              this.route.navigate(['/admin']);
               // route.parseUrl('/dashboard');
               return;
             }
