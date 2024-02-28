@@ -78,7 +78,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'service',
+        path: '',
         loadChildren: () =>
           import('./views/admin/admin.module').then((m) => m.AdminModule),
       },

@@ -1,1 +1,390 @@
-<p>employe works!</p>
+<c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Gestion des Employes</strong>
+        </c-card-header>
+        <c-card-body>
+          <!-- <p class="text-medium-emphasis small">
+            Click the accordions below to expand/collapse the accordion content.
+          </p> -->
+          <div style="display: flex; justify-content: flex-end;">
+            <button [cModalToggle]="createModal.id" cButton color="success" class="text-white">
+              <fa-icon
+                [icon]="icons"
+                size="lg"
+              ></fa-icon>
+              Add
+            </button>
+          </div>
+            <!-- Table list of services -->
+            <div *ngIf="is_loading" class="d-flex justify-content-center">
+              <span><c-spinner color="secondary" size="sm"></c-spinner> loading...</span>
+            </div>
+            <table *ngIf="!is_loading" [hover]="true" cTable>
+              <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tel</th>
+                <th scope="col">Heure de travail</th>
+                <th scope="col">Status</th>
+                <th></th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let service of list_employe; index as i">
+                <td>{{service.nom}}</td>
+                <td>{{service.email}}</td>
+                <td>{{service.tel}}</td>
+                <td>{{service.heure_debut}} - {{service.heure_fin}}</td>
+                <td>
+                  <button *ngIf="is_loading_activated" cButton class="me-1" variant="outline" color="info" disabled>
+                    <c-spinner aria-hidden="true" size="sm"></c-spinner>
+                    Loading...
+                  </button>
+                  <button *ngIf="!is_loading_activated" cButton class="me-1" variant="outline"  
+                    (click)="ontoogleActifSubmit(service._id, service.is_activated!)"
+                    [color]="service.is_activated ? 'info' : 'danger'" >
+                    <p-toggleButton [(ngModel)]="service.is_activated" onLabel="activated" offLabel="desactivated">
+                    </p-toggleButton>
+                  </button>
+                </td>
+                <td class="col-1">
+                  <button cButton class="me-1" variant="outline" color="info"
+                    (click)="onUpdateService(service._id)"
+                    [cModalToggle]="updateModal.id">
+                    <svg cIcon name="cil-pencil" size="xl"></svg>
+                  </button>
+                </td>
+                <td class="col-1">
+                  <button cButton class="me-1" variant="outline" color="danger" 
+                    (click)="onDeleteService(service._id, service.nom)"
+                    [cModalToggle]="deleteModal.id">
+                    <svg cIcon name="cil-trash" size="xl"></svg>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>
+
+  <!-- Modal for creation -->
+  <c-modal #createModal
+  [scrollable]="false"
+  alignment="center"
+  id="createModal">
+  <c-modal-header>
+    <h5 cModalTitle>Create Employe</h5>
+    <button [cModalToggle]="createModal.id" cButtonClose></button>
+  </c-modal-header>
+  <form [formGroup]="createForm" (ngSubmit)="onCreateSubmit()" cForm>
+  <c-modal-body>
+    
+      <div class="mb-3">
+        <label cLabel for="nomFrom">Nom</label>
+        <input cFormControl
+                id="nomFrom"
+                placeholder="nom"
+                type="text"
+                formControlName="nom"
+        />
+        @if(createForm.get('nom')?.hasError('required') && createForm.get('nom')?.touched) {
+          <p class="text-danger">nom is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="PrenomFrom">Prenom</label>
+        <input cFormControl
+                id="PrenomFrom"
+                placeholder="prenom"
+                type="text"
+                formControlName="prenom"
+        />
+        @if(createForm.get('prenom')?.hasError('required') && createForm.get('prenom')?.touched) {
+          <p class="text-danger">prenom is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="SexeFrom">Sexe</label>
+        <div  id="SexeFrom">
+        <c-form-check inline>
+            <input cFormCheckInput checked id="radioinline1" type="radio"
+            value="M" formControlName="sexe"/>
+            <label cFormCheckLabel for="radioinline1">M</label>
+          </c-form-check>
+          <c-form-check inline>
+            <input cFormCheckInput id="radioinline2" type="radio" 
+            value="F" formControlName="sexe" />
+            <label cFormCheckLabel for="radioinline2">F</label>
+          </c-form-check>
+        </div>
+        @if(createForm.get('sexe')?.hasError('required') && createForm.get('sexe')?.touched) {
+          <p class="text-danger">sexe is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="TelFrom">Tel</label>
+        <input cFormControl
+                id="TelFrom"
+                placeholder="0323233332"
+                type="text"
+                formControlName="tel"
+        />
+        @if(createForm.get('tel')?.hasError('required') && createForm.get('tel')?.touched) {
+          <p class="text-danger">tel is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="EmailFrom">Email</label>
+        <input cFormControl
+                id="EmailFrom"
+                placeholder="%"
+                type="email"
+                formControlName="email"
+        />
+        @if(createForm.get('email')?.hasError('required') && createForm.get('email')?.touched) {
+          <p class="text-danger">email is required</p>
+        }
+        @if(createForm.get('email')?.hasError('email')) {
+            <p class="text-danger">wrong format of email</p>
+          }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="AddresseFrom">Addresse</label>
+        <input cFormControl
+                id="AddresseFrom"
+                placeholder="lot"
+                type="text"
+                formControlName="addresse"
+        />
+        @if(createForm.get('addresse')?.hasError('required') && createForm.get('addresse')?.touched) {
+          <p class="text-danger">addresse is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="mdpFrom">Mot de passe</label>
+        <input cFormControl
+                id="mdpFrom"
+                placeholder="%"
+                type="password"
+                formControlName="mdp"
+        />
+        @if(createForm.get('mdp')?.hasError('required') && createForm.get('mdp')?.touched) {
+          <p class="text-danger">Mot de passe is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="heure_debutFrom">Heure debut de travail</label>
+        <input
+              aria-label="Default select date"
+              type="time"
+              id="heure_debutFrom"
+              formControlName="heure_debut"
+              cFormControl
+              (change)="onChangeCreate()"
+              #heureDebutInputCreate
+            />
+        @if(createForm.get('heure_debut')?.hasError('required') && createForm.get('heure_debut')?.touched) {
+          <p class="text-danger">duree is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="heure_finFrom">Heure fin de travail</label>
+        <input cFormControl
+                id="heure_finFrom"
+                type="time"
+                formControlName="heure_fin"
+                (change)="onChangeCreate()"
+                #heureFinInputCreate
+        />
+        @if(createForm.get('heure_fin')?.hasError('required') && createForm.get('heure_fin')?.touched) {
+          <p class="text-danger">duree is required</p>
+        }
+        <p *ngIf="error_time_create" class="text-danger">Heure fin ne doit pas etre inferieur ou egal a l'heure debut</p>
+      </div>
+    
+  </c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="createModal.id" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary" type="submit">Create</button>
+  </c-modal-footer>
+</form>
+</c-modal>
+<!--  -->
+
+<!-- Modal for update -->
+<c-modal #updateModal
+  [scrollable]="false"
+  alignment="center"
+  id="updateModal">
+  <c-modal-header>
+    <h5 cModalTitle>Update Employe</h5>
+    <button [cModalToggle]="updateModal.id" cButtonClose></button>
+  </c-modal-header>
+  <form [formGroup]="updateForm" (ngSubmit)="onUpdateSubmit(_id)" cForm>
+  <c-modal-body>
+    
+      <div class="mb-3">
+        <label cLabel for="nomFrom">Nom</label>
+        <input cFormControl
+                id="nomFrom"
+                placeholder="nom"
+                type="text"
+                formControlName="nom"
+        />
+        @if(updateForm.get('nom')?.hasError('required') && updateForm.get('nom')?.touched) {
+          <p class="text-danger">nom is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="PrenomFrom">Prenom</label>
+        <input cFormControl
+                id="PrenomFrom"
+                placeholder="prenom"
+                type="text"
+                formControlName="prenom"
+        />
+        @if(updateForm.get('prenom')?.hasError('required') && updateForm.get('prenom')?.touched) {
+          <p class="text-danger">prenom is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="SexeFrom">Sexe</label>
+        <div  id="SexeFrom">
+        <c-form-check inline>
+            <input cFormCheckInput checked id="radioinline1" type="radio"
+            value="M" formControlName="sexe"/>
+            <label cFormCheckLabel for="radioinline1">M</label>
+          </c-form-check>
+          <c-form-check inline>
+            <input cFormCheckInput id="radioinline2" type="radio" 
+            value="F" formControlName="sexe" />
+            <label cFormCheckLabel for="radioinline2">F</label>
+          </c-form-check>
+        </div>
+        @if(updateForm.get('sexe')?.hasError('required') && updateForm.get('sexe')?.touched) {
+          <p class="text-danger">sexe is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="TelFrom">Tel</label>
+        <input cFormControl
+                id="TelFrom"
+                placeholder="0323233332"
+                type="text"
+                formControlName="tel"
+        />
+        @if(updateForm.get('tel')?.hasError('required') && updateForm.get('tel')?.touched) {
+          <p class="text-danger">tel is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="EmailFrom">Email</label>
+        <input cFormControl
+                id="EmailFrom"
+                placeholder="%"
+                type="email"
+                formControlName="email"
+        />
+        @if(updateForm.get('email')?.hasError('required') && updateForm.get('email')?.touched) {
+          <p class="text-danger">email is required</p>
+        }
+        @if(updateForm.get('email')?.hasError('email')) {
+            <p class="text-danger">wrong format of email</p>
+          }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="AddresseFrom">Addresse</label>
+        <input cFormControl
+                id="AddresseFrom"
+                placeholder="lot"
+                type="text"
+                formControlName="addresse"
+        />
+        @if(updateForm.get('addresse')?.hasError('required') && updateForm.get('addresse')?.touched) {
+          <p class="text-danger">addresse is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="mdpFrom">Mot de passe</label>
+        <input cFormControl
+                id="mdpFrom"
+                placeholder="%"
+                type="password"
+                formControlName="mdp"
+        />
+        @if(updateForm.get('mdp')?.hasError('required') && updateForm.get('mdp')?.touched) {
+          <p class="text-danger">Mot de passe is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="heure_debutFrom">Heure debut de travail</label>
+        <input
+              aria-label="Default select date"
+              type="time"
+              id="heure_debutFrom"
+              formControlName="heure_debut"
+              class="form-control"
+              #heureDebutInputUpdate
+              (change)="onChangeUpdate()"
+            />
+        @if(updateForm.get('heure_debut')?.hasError('required') && updateForm.get('heure_debut')?.touched) {
+          <p class="text-danger">duree is required</p>
+        }
+      </div>
+      <div class="mb-3">
+        <label cLabel for="heure_finFrom">Heure fin de travail</label>
+        <input
+              aria-label="Default select date"
+              type="time"
+              id="heure_finFrom"
+              formControlName="heure_fin"
+              class="form-control"
+              #heureFinInputUpdate
+              (change)="onChangeUpdate()"
+            />
+        @if(updateForm.get('heure_fin')?.hasError('required') && updateForm.get('heure_fin')?.touched) {
+          <p class="text-danger">duree is required</p>
+        }
+        <p *ngIf="error_time_update" class="text-danger">Heure fin ne doit pas etre inferieur ou egal a l'heure debut</p>
+      </div>
+    
+  </c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="updateModal.id" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary" type="submit">Update</button>
+  </c-modal-footer>
+</form>
+</c-modal>
+
+<!--  -->
+
+<!-- Modal delete -->
+<c-modal #deleteModal
+  [scrollable]="false"
+  alignment="center"
+  id="deleteModal">
+  <c-modal-header>
+    <h5 cModalTitle><span class="text-danger">Attention!</span></h5>
+    <button [cModalToggle]="deleteModal.id" cButtonClose></button>
+  </c-modal-header>
+    <c-modal-body>
+        <h4>Cette action est irreversible</h4>
+        <p>Etes vous sure de vouloir supprimer le service <span class="text-info">{{nomEmploye}}</span>?</p>
+    </c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="deleteModal.id" cButton color="secondary">
+      Non
+      </button>
+      <button cButton color="danger" type="submit" (click)="onDeleteSubmit(_id)">Oui</button>
+    </c-modal-footer>
+</c-modal>

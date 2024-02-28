@@ -46,9 +46,9 @@ export class ServiceComponent implements OnInit{
 
   ngOnInit(): void {
     this.initializeForm()
+    this.is_loading = true
     this.service.getService().subscribe({
       next: (data: ResponseData<Service[]>) => {
-        this.is_loading = true
         this.list_service = data.details!.map(item => ({
           _id: item._id,
           nom: item.nom,
@@ -100,9 +100,9 @@ export class ServiceComponent implements OnInit{
         next: () => { this.deleteModal!.visible = false },
         error: (err) => console.log(err.message),
         complete: () => {
+          this.is_loading = true
           this.service.getService().subscribe({
             next: (data: ResponseData<Service[]>) => {
-              this.is_loading = true
               this.list_service = data.details!.map(item => ({
                 _id: item._id,
                 nom: item.nom,
@@ -136,9 +136,9 @@ export class ServiceComponent implements OnInit{
         },
         error: (err) => console.log(err.message),
         complete: () => {
+          this.is_loading = true
           this.service.getService().subscribe({
             next: (data: ResponseData<Service[]>) => {
-              this.is_loading = true
               this.list_service = data.details!.map(item => ({
                 _id: item._id,
                 nom: item.nom,
@@ -174,9 +174,9 @@ export class ServiceComponent implements OnInit{
         },
         error: (err) => console.log(err.message),
         complete: () => {
+          this.is_loading = true
           this.service.getService().subscribe({
             next: (data: ResponseData<Service[]>) => {
-              this.is_loading = true
               this.list_service = data.details!.map(item => ({
                 _id: item._id,
                 nom: item.nom,
@@ -209,19 +209,19 @@ export class ServiceComponent implements OnInit{
   ontoogleActifSubmit(id: string, actif: boolean){
     console.log(actif);
     
-    
+    this.is_loading_activated = true
     this.service.updateServiceToActivated(id, actif).subscribe({
       next: (result) => {
-        this.is_loading_activated = true
-        console.log(result);
-        
       },
-      error: (err) => console.log(err.message),
+      error: (err) => {
+        this.is_loading_activated = false
+        console.log(err.message)
+      },
       complete: () => {
         this.is_loading_activated = false
+        this.is_loading = true
         this.service.getService().subscribe({
           next: (data: ResponseData<Service[]>) => {
-            this.is_loading = true
             this.list_service = data.details!.map(item => ({
               _id: item._id,
               nom: item.nom,

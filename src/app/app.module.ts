@@ -15,26 +15,7 @@ import { AppComponent } from './app.component';
 // Import containers
 import { DefaultFooterComponent, DefaultHeaderComponent, DefaultHeaderClientComponent, DefaultLayoutClientComponent, DefaultLayoutComponent, DefaultLayoutEmployeComponent, DefaultHeaderEmployeComponent } from './containers';
 
-import {
-  AvatarModule,
-  BadgeModule,
-  BreadcrumbModule,
-  ButtonGroupModule,
-  ButtonModule,
-  CardModule,
-  DropdownModule,
-  FooterModule,
-  FormModule,
-  GridModule,
-  HeaderModule,
-  ListGroupModule,
-  NavModule,
-  ProgressModule,
-  SharedModule,
-  SidebarModule,
-  TabsModule,
-  UtilitiesModule
-} from '@coreui/angular';
+import { AvatarModule, BadgeModule, BreadcrumbModule, ButtonGroupModule, ButtonModule, CardModule, DropdownModule, FooterModule, FormModule, GridModule, HeaderModule, ListGroupModule, NavModule, ProgressModule, SharedModule, SidebarModule, TabsModule, UtilitiesModule } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
