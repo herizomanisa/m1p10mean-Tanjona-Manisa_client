@@ -33,6 +33,10 @@ export class ServiceService {
     return this.http.get<ResponseData<any>>(`${this.services_apiurl}/list`);
   }
 
+  getServiceActif(): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(`${this.services_apiurl}/list/activated`);
+  }
+
   getServiceById(id: string): Observable<ResponseData<any>> {
     return this.http.get<ResponseData<any>>(
       `${this.services_apiurl}/service/${id}`

@@ -87,7 +87,7 @@ export class RendezvousFormComponent implements OnInit {
     this.isLoading = true;
     try {
       if (!this.token) return;
-      this.employeService.getEmploye(this.token).subscribe({
+      this.employeService.getEmployeActif(this.token).subscribe({
         next: (response) => {
           this.listEmploye = response.details;
           this.isLoading = false;
@@ -105,7 +105,7 @@ export class RendezvousFormComponent implements OnInit {
   fetchListService(): void {
     this.isLoading = true;
     try {
-      this.serviceService.getService().subscribe({
+      this.serviceService.getServiceActif().subscribe({
         next: (response) => {
           this.listService = response.details;
           this.isLoading = false;

@@ -31,13 +31,14 @@ export class EmployeClientListComponent implements OnInit {
   }
 
   initData(): void {
+    this.isLoading = true;
     this.fetchListEmployePlusPreference();
   }
 
   fetchListEmployePlusPreference(): void {
-    this.isLoading = true;
+    // this.isLoading = true;
     try {
-      this.preferenceService.getAllEmploye().subscribe({
+      this.preferenceService.getAllEmployeActivatedPlusPreference().subscribe({
         next: (response) => {
           this.listEmploye = response.details;
           this.isLoading = false;

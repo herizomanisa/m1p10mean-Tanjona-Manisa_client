@@ -29,9 +29,9 @@ export class PreferenceService {
     });
   }
 
-  getAllService(): Observable<ResponseData<any>> {
+  getAllServiceActivatedPlusPreference(): Observable<ResponseData<any>> {
     return this.http.get<ResponseData<any>>(
-      `${this.preferences_apiurl}/all-services`,
+      `${this.preferences_apiurl}/all-services/activated`,
       {
         headers: this.getHeaders(
           this.localStorageService.getData('x-authorization-c-token')
@@ -40,9 +40,9 @@ export class PreferenceService {
     );
   }
 
-  getAllEmploye(): Observable<ResponseData<any>> {
+  getAllEmployeActivatedPlusPreference(): Observable<ResponseData<any>> {
     return this.http.get<ResponseData<any>>(
-      `${this.preferences_apiurl}/all-employes`,
+      `${this.preferences_apiurl}/all-employes/activated`,
       {
         headers: this.getHeaders(
           this.localStorageService.getData('x-authorization-c-token')

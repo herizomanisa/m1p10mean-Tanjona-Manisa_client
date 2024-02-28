@@ -32,13 +32,14 @@ export class ServiceComponent implements OnInit {
   }
 
   initData(): void {
+    this.isLoading = true;
     this.fetchListServicePlusPreference();
   }
 
   fetchListService(): void {
     this.isLoading = true;
     try {
-      this.serviceService.getService().subscribe({
+      this.serviceService.getServiceActif().subscribe({
         next: (response) => {
           this.listService = response.details;
           this.isLoading = false;
@@ -54,9 +55,9 @@ export class ServiceComponent implements OnInit {
   }
 
   fetchListServicePlusPreference(): void {
-    this.isLoading = true;
+    // this.isLoading = true;
     try {
-      this.preferenceService.getAllService().subscribe({
+      this.preferenceService.getAllServiceActivatedPlusPreference().subscribe({
         next: (response) => {
           this.listService = response.details;
           this.isLoading = false;
