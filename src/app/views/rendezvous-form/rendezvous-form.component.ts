@@ -70,7 +70,7 @@ export class RendezvousFormComponent implements OnInit {
   initializeForm(id_service: string, id_employe: string): void {
     this.rendezvousForm = this.fb.group({
       id_service: [id_service, Validators.required],
-      id_employe: [id_employe, Validators.required],
+      id_employe: [id_employe],
       date_heure: [
         '',
         [Validators.required, this.currentOrFutureDateValidator],
