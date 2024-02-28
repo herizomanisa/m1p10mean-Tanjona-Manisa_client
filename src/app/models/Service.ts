@@ -6,4 +6,5 @@ export interface Service {
   commission: number;
   created_at: Date;
   is_prefered?: boolean;
+  is_activated?: boolean;
 }
