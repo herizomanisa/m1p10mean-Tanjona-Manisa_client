@@ -31,7 +31,7 @@ import { ServiceComponent } from './service/service.component';
 
 import { WidgetsModule } from '../widgets/widgets.module';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
-import { NotificationsRoutingModule } from '../notifications/notifications-routing.module';
+// import { NotificationsRoutingModule } from '../notifications/notifications-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
@@ -55,7 +55,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     WidgetsModule,
     CommonModule,
     ReactiveFormsModule,
-    NotificationsRoutingModule,
+    // NotificationsRoutingModule,
     DocsComponentsModule,
     AlertModule,
     BadgeModule,
