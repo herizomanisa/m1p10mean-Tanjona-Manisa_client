@@ -16,6 +16,7 @@ export class ServiceComponent implements OnInit{
   @ViewChild('createModal') createModal?: ModalComponent;
   @ViewChild('deleteModal') deleteModal?: ModalComponent;
   is_loading: Boolean = false
+  is_loading_activated: Boolean = false
   _id: string = ""
   nomService: string = ""
   list_service: Service[]=[]
@@ -54,7 +55,8 @@ export class ServiceComponent implements OnInit{
           prix: item.prix,
           duree: item.duree,
           commission: item.commission,
-          created_at: item.created_at
+          created_at: item.created_at,
+          is_activated: item.is_activated
         }))
       },
       error: (err) => {
@@ -107,7 +109,8 @@ export class ServiceComponent implements OnInit{
                 prix: item.prix,
                 duree: item.duree,
                 commission: item.commission,
-                created_at: item.created_at
+                created_at: item.created_at,
+                is_activated: item.is_activated
               }))
             },
             error: (err) => {
@@ -142,7 +145,8 @@ export class ServiceComponent implements OnInit{
                 prix: item.prix,
                 duree: item.duree,
                 commission: item.commission,
-                created_at: item.created_at
+                created_at: item.created_at,
+                is_activated: item.is_activated
               }))
             },
             error: (err) => {
@@ -179,7 +183,8 @@ export class ServiceComponent implements OnInit{
                 prix: item.prix,
                 duree: item.duree,
                 commission: item.commission,
-                created_at: item.created_at
+                created_at: item.created_at,
+                is_activated: item.is_activated
               }))
             },
             error: (err) => {
@@ -200,5 +205,43 @@ export class ServiceComponent implements OnInit{
       this.createForm.markAllAsTouched();
     }
     
+  }
+  ontoogleActifSubmit(id: string, actif: boolean){
+    console.log(actif);
+    
+    
+    this.service.updateServiceToActivated(id, actif).subscribe({
+      next: (result) => {
+        this.is_loading_activated = true
+        console.log(result);
+        
+      },
+      error: (err) => console.log(err.message),
+      complete: () => {
+        this.is_loading_activated = false
+        this.service.getService().subscribe({
+          next: (data: ResponseData<Service[]>) => {
+            this.is_loading = true
+            this.list_service = data.details!.map(item => ({
+              _id: item._id,
+              nom: item.nom,
+              prix: item.prix,
+              duree: item.duree,
+              commission: item.commission,
+              created_at: item.created_at,
+              is_activated: item.is_activated
+            }))
+          },
+          error: (err) => {
+            this.is_loading = false
+            console.log(err.message)
+          },
+          complete: () => {
+            this.is_loading = false
+            console.log("complete")
+          }
+        })
+      }
+    })
   }
 }

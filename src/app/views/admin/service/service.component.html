@@ -28,6 +28,7 @@
                 <th scope="col">Prix (en Ariary)</th>
                 <th scope="col">Duree (en minute)</th>
                 <th scope="col">Commission (en %)</th>
+                <th scope="col">Status</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -38,6 +39,18 @@
                 <td>{{service.prix}} Ar</td>
                 <td>{{service.duree}} mn</td>
                 <td>{{service.commission}}%</td>
+                <td>
+                  <button *ngIf="is_loading_activated" cButton class="me-1" variant="outline" color="info" disabled>
+                    <c-spinner aria-hidden="true" size="sm"></c-spinner>
+                    Loading...
+                  </button>
+                  <button *ngIf="!is_loading_activated" cButton class="me-1" variant="outline"  
+                    (click)="ontoogleActifSubmit(service._id, service.is_activated!)"
+                    [color]="service.is_activated ? 'info' : 'danger'" >
+                    <p-toggleButton [(ngModel)]="service.is_activated" onLabel="activated" offLabel="desactivated">
+                    </p-toggleButton>
+                  </button>
+                </td>
                 <td class="col-1">
                   <button cButton class="me-1" variant="outline" color="info"
                     (click)="onUpdateService(service._id)"

@@ -11,6 +11,7 @@ interface ServiceForm {
   prix: number;
   duree: number;
   commission: number;
+  is_activated?: boolean
 }
 
 @Injectable({
@@ -64,6 +65,17 @@ export class ServiceService {
       `${this.services_apiurl}/create`,
       data,
       { headers: this.headers_admin}
+    );
+  }
+
+  updateServiceToActivated(
+    id: string,
+    is_activated: boolean
+  ): Observable<ResponseData<any>> {
+    return this.http.put<ResponseData<any>>(
+      `${this.services_apiurl}/service/${id}`,
+      {is_activated},
+      { headers: this.headers_admin }
     );
   }
 }

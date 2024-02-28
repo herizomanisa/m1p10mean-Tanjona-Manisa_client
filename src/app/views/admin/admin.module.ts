@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { FormsModule } from '@angular/forms';
 import {
     AlertModule,
   AvatarModule,
@@ -31,8 +31,8 @@ import { ServiceComponent } from './service/service.component';
 
 import { WidgetsModule } from '../widgets/widgets.module';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
-import { NotificationsRoutingModule } from '../notifications/notifications-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 @NgModule({
   imports: [
@@ -54,8 +54,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     TableModule,
     WidgetsModule,
     CommonModule,
-    ReactiveFormsModule,
-    NotificationsRoutingModule,
     DocsComponentsModule,
     AlertModule,
     BadgeModule,
@@ -66,7 +64,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     TooltipModule,
     PopoverModule,
     FontAwesomeModule,
-    SpinnerModule
+    SpinnerModule,
+    ToggleButtonModule,
+    FormsModule
   ],
   declarations: [ServiceComponent]
 })
