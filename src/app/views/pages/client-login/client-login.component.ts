@@ -55,31 +55,28 @@ export class ClientLoginComponent implements OnInit {
     this.initializeForm();
   }
 
-  async onLoginSubmit() {
+  onLoginSubmit() {
     if (this.loginForm.valid) {
       this.isLoading = true;
-      const token = await this.clientService.login(
-        this.loginForm.value.email,
-        this.loginForm.value.mdp
-      );
-      token.subscribe({
-        next: (result: ResponseData<String>) => {
-          this.isLoading = false;
-          const rep: string = result.details as string;
-          if (rep !== null) {
-            this.localStorageService.saveData('x-authorization-c-token', rep);
-            this.route.navigate(['/']);
-            return;
-          }
-        },
-        error: (err) => {
-          this.isLoading = false;
-          this.errorMessage = 'Identifiant ou mot de passe incorrect';
-          console.error(err);
-        },
-        complete: () => console.log('complete'),
-      });
-      this.isLoading = false;
+      this.clientService
+        .login(this.loginForm.value.email, this.loginForm.value.mdp)
+        .subscribe({
+          next: (result: ResponseData<String>) => {
+            this.isLoading = false;
+            const rep: string = result.details as string;
+            if (rep !== null) {
+              this.localStorageService.saveData('x-authorization-c-token', rep);
+              this.route.navigate(['/']);
+              return;
+            }
+          },
+          error: (err) => {
+            this.isLoading = false;
+            this.errorMessage = 'Identifiant ou mot de passe incorrect';
+            console.error(err);
+          },
+          complete: () => console.log('complete'),
+        });
     } else {
       this.loginForm.markAllAsTouched();
     }

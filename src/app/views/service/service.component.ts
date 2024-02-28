@@ -41,15 +41,15 @@ export class ServiceComponent implements OnInit {
       this.serviceService.getService().subscribe({
         next: (response) => {
           this.listService = response.details;
+          this.isLoading = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoading = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoading = false;
     }
   }
 
@@ -59,15 +59,15 @@ export class ServiceComponent implements OnInit {
       this.preferenceService.getAllService().subscribe({
         next: (response) => {
           this.listService = response.details;
+          this.isLoading = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoading = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoading = false;
     }
   }
 
@@ -85,15 +85,15 @@ export class ServiceComponent implements OnInit {
       this.preferenceService.createPreference(data).subscribe({
         next: () => {
           this.fetchListServicePlusPreference();
+          this.isLoadingOnUpdate = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoadingOnUpdate = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoadingOnUpdate = false;
     }
   }
 
@@ -103,15 +103,15 @@ export class ServiceComponent implements OnInit {
       this.preferenceService.findAndDeletePreference(id, 'service').subscribe({
         next: () => {
           this.fetchListServicePlusPreference();
+          this.isLoadingOnUpdate = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoadingOnUpdate = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoadingOnUpdate = false;
     }
   }
 

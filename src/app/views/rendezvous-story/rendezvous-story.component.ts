@@ -48,15 +48,15 @@ export class RendezvousStoryComponent implements OnInit {
       this.clientService.getHistoryRendezvous().subscribe({
         next: (response) => {
           this.listRendezvous = response.details;
+          this.isLoading = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoading = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoading = false;
     }
   }
 }

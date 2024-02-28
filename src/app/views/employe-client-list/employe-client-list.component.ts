@@ -40,15 +40,15 @@ export class EmployeClientListComponent implements OnInit {
       this.preferenceService.getAllEmploye().subscribe({
         next: (response) => {
           this.listEmploye = response.details;
+          this.isLoading = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoading = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoading = false;
     }
   }
 
@@ -66,15 +66,15 @@ export class EmployeClientListComponent implements OnInit {
       this.preferenceService.createPreference(data).subscribe({
         next: () => {
           this.fetchListEmployePlusPreference();
+          this.isLoadingOnUpdate = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoadingOnUpdate = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoadingOnUpdate = false;
     }
   }
 
@@ -84,15 +84,15 @@ export class EmployeClientListComponent implements OnInit {
       this.preferenceService.findAndDeletePreference(id, 'employe').subscribe({
         next: () => {
           this.fetchListEmployePlusPreference();
+          this.isLoadingOnUpdate = false;
         },
         error: (error) => {
           console.log(error);
+          this.isLoadingOnUpdate = false;
         },
       });
     } catch (e) {
       console.error(e);
-    } finally {
-      this.isLoadingOnUpdate = false;
     }
   }
 
