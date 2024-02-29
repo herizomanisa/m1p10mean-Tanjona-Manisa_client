@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import { LocalStorageService } from 'src/app/services/storage/local-storage.service';
+import { BlacklistTokenService } from '../../../services/blacklisttoken/blacklist-token.service';
 
 @Component({
   selector: 'app-default-header-client',
@@ -21,13 +22,22 @@ export class DefaultHeaderClientComponent extends HeaderComponent {
   constructor(
     private classToggler: ClassToggleService,
     private localStorageService: LocalStorageService,
+    private blacklist: BlacklistTokenService,
     private route: Router
   ) {
     super();
   }
 
   logOut(): void {
-    this.localStorageService.removeData("x-authorization-c-token");
-    this.route.navigate(['/client/login']);
+    this.blacklist.deconnection(this.localStorageService.getData("x-authorization-c-token")!).subscribe({
+      next: () => {
+        this.localStorageService.removeData("x-authorization-c-token");
+        this.route.navigate(['/client/login']);
+      },
+      error: (err) => {console.log(err);
+      },
+      complete: () => {console.log("Deconnected");
+      }
+    })
   }
 }

@@ -5,6 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ModalComponent } from '@coreui/angular';
 import { EmployeService } from '../../../services/employe/employe.service';
 import { Employe } from '../../../models/Employe';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-employe',
@@ -19,6 +20,7 @@ export class EmployeComponent {
   @ViewChild('heureDebutInputCreate') heureDebutInputCreate?: ElementRef;
   @ViewChild('heureDebutInputUpdate') heureDebutInputUpdate?: ElementRef;
   @ViewChild('heureFinInputUpdate') heureFinInputUpdate?: ElementRef;
+  private headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
   is_loading: Boolean = false
   is_loading_activated: Boolean = false
   _id: string = ""
@@ -63,7 +65,7 @@ export class EmployeComponent {
   ngOnInit(): void {
     this.initializeForm()
     this.is_loading = true
-    this.employe.getEmploye().subscribe({
+    this.employe.getEmploye(this.headers).subscribe({
       next: (data: ResponseData<Employe[]>) => {
         this.list_employe = data.details!.map(item => ({
           _id: item._id,
@@ -99,7 +101,7 @@ export class EmployeComponent {
 
   onUpdateService(id: string){
     this._id = id
-    this.employe.getEmployeById(id).subscribe({
+    this.employe.getEmployeById(this.headers,id).subscribe({
       next: (data: ResponseData<Employe>) => {
         this.updateForm = this.fb.group({
           nom: [data.details!.nom, Validators.required],
@@ -123,12 +125,12 @@ export class EmployeComponent {
   }
 
   onDeleteSubmit(id: string){
-      this.employe.deleteEmploye(id).subscribe({
+      this.employe.deleteEmploye(this.headers,id).subscribe({
         next: () => { this.deleteModal!.visible = false },
         error: (err) => console.log(err.message),
         complete: () => {
           this.is_loading = true
-          this.employe.getEmploye().subscribe({
+          this.employe.getEmploye(this.headers).subscribe({
             next: (data: ResponseData<Employe[]>) => {
               this.list_employe = data.details!.map(item => ({
                 _id: item._id,
@@ -163,14 +165,14 @@ export class EmployeComponent {
   onUpdateSubmit(id: string){
     if (this.updateForm.valid) {
       this.updateModal!.visible = false
-      this.employe.updateEmploye(id, this.updateForm.value).subscribe({
+      this.employe.updateEmploye(this.headers, id, this.updateForm.value).subscribe({
         next: () => {
           this.updateModal!.visible = false
         },
         error: (err) => console.log(err.message),
         complete: () => {
           this.is_loading = true
-          this.employe.getEmploye().subscribe({
+          this.employe.getEmploye(this.headers).subscribe({
             next: (data: ResponseData<Employe[]>) => {
               this.list_employe = data.details!.map(item => ({
                 _id: item._id,
@@ -207,14 +209,14 @@ export class EmployeComponent {
 
   onCreateSubmit(){
     if (this.createForm.valid) {
-      this.employe.createEmploye(this.createForm.value).subscribe({
+      this.employe.createEmploye(this.headers, this.createForm.value).subscribe({
         next: () => {
           this.createModal!.visible = false
         },
         error: (err) => console.log(err.message),
         complete: () => {
           this.is_loading = true
-          this.employe.getEmploye().subscribe({
+          this.employe.getEmploye(this.headers).subscribe({
             next: (data: ResponseData<Employe[]>) => {
               this.list_employe = data.details!.map(item => ({
                 _id: item._id,
@@ -255,7 +257,7 @@ export class EmployeComponent {
     console.log(actif);
     
     this.is_loading_activated = true
-    this.employe.updateEmployeToActivated(id, actif).subscribe({
+    this.employe.updateEmployeToActivated(this.headers, id, actif).subscribe({
       next: (result) => {
       },
       error: (err) => {
@@ -265,7 +267,7 @@ export class EmployeComponent {
       complete: () => {
         this.is_loading_activated = false
         this.is_loading = true
-        this.employe.getEmploye().subscribe({
+        this.employe.getEmploye(this.headers).subscribe({
           next: (data: ResponseData<Employe[]>) => {
             this.list_employe = data.details!.map(item => ({
               _id: item._id,

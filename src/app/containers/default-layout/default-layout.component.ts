@@ -17,6 +17,6 @@ export class DefaultLayoutComponent implements OnInit{
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-      this.role = this.localStorageService.getData("x-authorization-c-token");
+      this.role = this.localStorageService.getData("x-authorization-m-token");
   }
 }

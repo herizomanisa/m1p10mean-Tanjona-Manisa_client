@@ -57,4 +57,15 @@ export class ClientService {
       }
     );
   }
+
+  searchByName(name: string, email: string): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.customers_apiurl}/search/name?name=${name}&email=${email}`,
+      {
+        headers: this.getHeaders(
+          this.localStorageService.getData('x-authorization-m-token')
+        ),
+      }
+    );
+  }
 }
