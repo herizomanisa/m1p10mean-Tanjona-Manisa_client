@@ -40,4 +40,9 @@ export class ManagerService {
   getStatistics_CA_jour(): Observable<ResponseData<StatMois[]>>{
     return this.http.get<ResponseData<StatMois[]>>(`${this.apiurl}/statistique/ca-jour`,{ headers: this.headers })
   }
+
+  getCalcul_CA(mois: number, loyer: number, piece:number, autres: number): Observable<ResponseData<any>>{
+    return this.http.get<ResponseData<any>>(`${this.apiurl}/CA?mois=${mois}&loyer=${loyer}&piece=${piece}&autres=${autres}`,
+    { headers: this.headers })
+  }
 }

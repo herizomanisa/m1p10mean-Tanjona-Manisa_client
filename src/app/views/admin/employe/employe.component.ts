@@ -54,7 +54,7 @@ export class EmployeComponent {
       tel: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       addresse: ['', Validators.required],
-      mdp: ['', Validators.required],
+      mdp: [''],
       heure_debut: ['', Validators.required],
       heure_fin: ['', Validators.required],
     });
@@ -108,7 +108,7 @@ export class EmployeComponent {
           tel: [data.details!.tel, Validators.required],
           email: [data.details!.email, [Validators.required, Validators.email]],
           addresse: [data.details!.addresse, Validators.required],
-          mdp: [data.details!.mdp, Validators.required],
+          mdp: [null],
           heure_debut: [data.details!.heure_debut, Validators.required],
           heure_fin: [data.details!.heure_fin, Validators.required],
         });
