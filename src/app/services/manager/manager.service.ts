@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResponseData } from '../../models/ResponseData'
 import { StatMois } from '../../models/StatMois'
 import { EmployeTravail } from '../../models/EmployeTravail'
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
