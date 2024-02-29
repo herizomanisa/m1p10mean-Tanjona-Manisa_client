@@ -1,6 +1,6 @@
 export interface Employe {
   _id: string;
-  image: string;
+  image?: string;
   nom: string;
   prenom: string;
   tel: string;
