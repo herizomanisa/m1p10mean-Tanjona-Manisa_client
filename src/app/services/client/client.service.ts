@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResponseData } from '../../models/ResponseData';
 import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../storage/local-storage.service';
+import { Offre } from '../../models/Offre';
 
 interface CustomerForm {
   image: string | null;
@@ -67,5 +68,9 @@ export class ClientService {
         ),
       }
     );
+  }
+
+  getOffres(headers: HttpHeaders): Observable<ResponseData<Offre[]>> {
+    return this.http.get<ResponseData<Offre[]>>(`${this.customers_apiurl}/offers`, { headers: headers });
   }
 }

@@ -31,4 +31,9 @@ export const navItemsClient: INavData[] = [
       },
     ],
   },
+  {
+    name: 'Notification',
+    url: '/notification',
+    iconComponent: { name: 'cil-calendar' },
+  },
 ];
