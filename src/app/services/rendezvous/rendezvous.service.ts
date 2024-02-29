@@ -45,6 +45,19 @@ export class RendezvousService {
     );
   }
 
+  createRendezvousNoEmploye(
+    data: RendezvousForm,
+    token: string
+  ): Observable<ResponseData<any>> {
+    return this.http.post<ResponseData<any>>(
+      `${this.rendezvous_apiurl}/create/rendezvous-no-employe`,
+      data,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
   getRendezvous(token: string): Observable<ResponseData<any>> {
     return this.http.post<ResponseData<any>>(`${this.rendezvous_apiurl}/list`, {
       headers: this.getHeaders(token),

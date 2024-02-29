@@ -122,31 +122,60 @@ export class RendezvousFormComponent implements OnInit {
 
   async onSubmitRendezvousForm() {
     if (this.rendezvousForm.valid) {
-      const data = {
-        id_service: this.rendezvousForm.value.id_service,
-        id_employe: this.rendezvousForm.value.id_employe,
-        date_heure: new Date(this.rendezvousForm.value.date_heure),
-      };
-      this.isLoading = true;
-      this.rendezvousService.createRendezvous(data, this.token).subscribe({
-        next: () => {
-          this.toast.success(
-            'Votre demande a été remise avec succès',
-            'Succès',
-            {
+      if (this.rendezvousForm.value.id_employe) {
+        const data = {
+          id_service: this.rendezvousForm.value.id_service,
+          id_employe: this.rendezvousForm.value.id_employe,
+          date_heure: new Date(this.rendezvousForm.value.date_heure),
+        };
+        this.isLoading = true;
+        this.rendezvousService.createRendezvous(data, this.token).subscribe({
+          next: () => {
+            this.toast.success(
+              'Votre demande a été remise avec succès',
+              'Succès',
+              {
+                timeOut: 5000,
+              }
+            );
+            this.isLoading = false;
+          },
+          error: () => {
+            this.toast.error('Échec de la demande', 'Erreur', {
               timeOut: 5000,
-            }
-          );
-          this.isLoading = false;
-        },
-        error: () => {
-          this.toast.error('Échec de la demande', 'Erreur', {
-            timeOut: 5000,
+            });
+            this.isLoading = false;
+          },
+        });
+        return;
+      } else {
+        const data = {
+          id_service: this.rendezvousForm.value.id_service,
+          date_heure: new Date(this.rendezvousForm.value.date_heure),
+        };
+        this.isLoading = true;
+        this.rendezvousService
+          .createRendezvousNoEmploye(data, this.token)
+          .subscribe({
+            next: () => {
+              this.toast.success(
+                'Votre demande a été remise avec succès',
+                'Succès',
+                {
+                  timeOut: 5000,
+                }
+              );
+              this.isLoading = false;
+            },
+            error: () => {
+              this.toast.error('Échec de la demande', 'Erreur', {
+                timeOut: 5000,
+              });
+              this.isLoading = false;
+            },
           });
-          this.isLoading = false;
-        },
-      });
-      return;
+        return;
+      }
     }
     this.rendezvousForm.markAllAsTouched();
   }
