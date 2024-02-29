@@ -136,7 +136,10 @@ export class EmployeProfilComponent implements OnInit {
         tel: this.employeForm.value.tel,
         email: this.employeForm.value.email,
         addresse: this.employeForm.value.addresse,
-        mdp: this.employeForm.value.mdp,
+        mdp:
+          this.employeForm.value.mdp && this.employeForm.value.mdp !== ''
+            ? this.employeForm.value.mdp
+            : null,
       };
       this.isLoading = true;
       this.employeService
