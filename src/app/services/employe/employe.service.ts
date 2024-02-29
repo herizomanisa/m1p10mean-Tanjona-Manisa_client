@@ -100,6 +100,15 @@ export class EmployeService {
     );
   }
 
+  getCommission(
+    header: HttpHeaders
+  ): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.employes_apiurl}/commission`,
+      { headers: header }
+    );
+  }
+
   updateEmploye(
     headers_admin: HttpHeaders,
     id: string,
