@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+import { RendezvousMyListRoutingModule } from './rendezvous-my-list-routing.module';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
 import {
+  AlertModule,
   AvatarModule,
   ButtonGroupModule,
   ButtonModule,
@@ -15,16 +17,11 @@ import {
   TableModule,
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
-
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { EmployeRoutingModule } from './employe-routing.module';
-
-import { EmployeProfilComponent } from './employe-profil/employe-profil.component';
-import { RendezvousListComponent } from './rendezvous-list/rendezvous-list.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { RendezvousMyListComponent } from './rendezvous-my-list.component';
 
 @NgModule({
-  declarations: [EmployeProfilComponent, RendezvousListComponent],
+  declarations: [RendezvousMyListComponent],
   imports: [
     CommonModule,
     CardModule,
@@ -32,16 +29,17 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     IconModule,
     GridModule,
     ReactiveFormsModule,
+    ButtonModule,
     FormModule,
     ButtonModule,
     ButtonGroupModule,
     AvatarModule,
     TableModule,
-    EmployeRoutingModule,
     SpinnerModule,
     FontAwesomeModule,
-    DragDropModule
+    AlertModule,
+    RendezvousMyListRoutingModule,
   ],
   providers: [DatePipe]
 })
-export class EmployeModule {}
+export class RendezvousMyListModule {}

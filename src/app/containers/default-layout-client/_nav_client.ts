@@ -2,8 +2,13 @@ import { INavData } from '@coreui/angular';
 
 export const navItemsClient: INavData[] = [
   {
+    name: 'Prendre rendez-vous',
+    url: '/rendezvous-form',
+    iconComponent: { name: 'cil-pencil' },
+  },
+  {
     name: 'Liste des services',
-    url: '/',
+    url: '',
     iconComponent: { name: 'cil-calculator' },
   },
   {
@@ -12,9 +17,18 @@ export const navItemsClient: INavData[] = [
     iconComponent: { name: 'cil-people' },
   },
   {
-    name: 'Mes rendez-vous',
-    url: '/rendezvous-story',
+    name: 'Rendez-vous',
     iconComponent: { name: 'cil-calendar' },
+    children: [
+      {
+        name: 'Mes rendez-vous',
+        url: '/rendezvous-my-list',
+      },
+      {
+        name: 'Historique',
+        url: '/rendezvous-story',
+      },
+    ],
   },
   {
     name: 'Préférence',

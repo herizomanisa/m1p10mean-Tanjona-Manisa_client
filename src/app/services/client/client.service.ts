@@ -73,4 +73,22 @@ export class ClientService {
   getOffres(headers: HttpHeaders): Observable<ResponseData<Offre[]>> {
     return this.http.get<ResponseData<Offre[]>>(`${this.customers_apiurl}/offers`, { headers: headers });
   }
+  
+  payment(data: { id_rendezvous: string }): Observable<any> {
+    return this.http.post<ResponseData<String>>(
+      `${this.customers_apiurl}/payment`,
+      data
+    );
+  }
+
+  getNotPaid(): Observable<any> {
+    return this.http.get<ResponseData<String>>(
+      `${this.customers_apiurl}/not-paid/rendezvous`,
+      {
+        headers: this.getHeaders(
+          this.localStorageService.getData('x-authorization-c-token')
+        ),
+      }
+    );
+  }
 }

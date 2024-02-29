@@ -23,7 +23,6 @@ interface EmployeForm {
 })
 export class EmployeService {
   private employes_apiurl = `${environment.apiUrl}/api/employes`;
-  // private headers_admin = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
 
   constructor(
     private http: HttpClient,
@@ -48,9 +47,12 @@ export class EmployeService {
   }
 
   getEmploye(headers_admin: HttpHeaders): Observable<ResponseData<Employe[]>> {
-    return this.http.get<ResponseData<Employe[]>>(`${this.employes_apiurl}/list`, {
-      headers: headers_admin,
-    });
+    return this.http.get<ResponseData<Employe[]>>(
+      `${this.employes_apiurl}/list`,
+      {
+        headers: headers_admin,
+      }
+    );
   }
 
   getEmployeActif(token: string): Observable<ResponseData<any>> {
@@ -88,14 +90,21 @@ export class EmployeService {
     );
   }
 
-  getEmployeById(headers_admin: HttpHeaders, id: string): Observable<ResponseData<Employe>> {
+  getEmployeById(
+    headers_admin: HttpHeaders,
+    id: string
+  ): Observable<ResponseData<Employe>> {
     return this.http.get<ResponseData<Employe>>(
       `${this.employes_apiurl}/employe/${id}`,
-      { headers: headers_admin}
+      { headers: headers_admin }
     );
   }
 
-  updateEmploye(headers_admin: HttpHeaders, id: string, data: Employe): Observable<ResponseData<any>> {
+  updateEmploye(
+    headers_admin: HttpHeaders,
+    id: string,
+    data: Employe
+  ): Observable<ResponseData<any>> {
     return this.http.put<ResponseData<any>>(
       `${this.employes_apiurl}/employe/${id}`,
       data,
@@ -103,26 +112,79 @@ export class EmployeService {
     );
   }
 
-  deleteEmploye(headers_admin: HttpHeaders, id: string): Observable<ResponseData<any>> {
+  deleteEmploye(
+    headers_admin: HttpHeaders,
+    id: string
+  ): Observable<ResponseData<any>> {
     return this.http.delete<ResponseData<any>>(
       `${this.employes_apiurl}/employe/${id}`,
-      { headers: headers_admin}
+      { headers: headers_admin }
     );
   }
 
-  createEmploye(headers_admin: HttpHeaders, data: Employe): Observable<ResponseData<any>> {
+  createEmploye(
+    headers_admin: HttpHeaders,
+    data: Employe
+  ): Observable<ResponseData<any>> {
     return this.http.post<ResponseData<any>>(
       `${this.employes_apiurl}/create`,
       data,
-      { headers: headers_admin}
+      { headers: headers_admin }
     );
   }
 
-  updateEmployeToActivated(headers_admin: HttpHeaders, id: string, is_activated: boolean): Observable<ResponseData<any>> {
+  updateEmployeToActivated(
+    headers_admin: HttpHeaders,
+    id: string,
+    is_activated: boolean
+  ): Observable<ResponseData<any>> {
     return this.http.put<ResponseData<any>>(
       `${this.employes_apiurl}/employe/${id}`,
-      {is_activated},
+      { is_activated },
       { headers: headers_admin }
+    );
+  }
+
+  getRdvAssigneUpToDate(token: string): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.employes_apiurl}/rendezvous/assigne/up-to-date`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
+  getRendezvousUpToDate(token: string): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.employes_apiurl}/rendezvous/up-to-date`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
+  validateRendezvous(
+    id_rendezvous: string,
+    token: string
+  ): Observable<ResponseData<any>> {
+    return this.http.put<ResponseData<any>>(
+      `${this.employes_apiurl}/rendezvousvalidate/${id_rendezvous}`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
+  acceptRdvNoEmploye(
+    data: { id_rendezvous: string },
+    token: string
+  ): Observable<ResponseData<any>> {
+    return this.http.put<ResponseData<any>>(
+      `${this.employes_apiurl}/accept/rendezvous`,
+      data,
+      {
+        headers: this.getHeaders(token),
+      }
     );
   }
 }

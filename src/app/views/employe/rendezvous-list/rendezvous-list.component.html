@@ -1,0 +1,136 @@
+<div *ngIf="isLoading" class="fade show spinner-container">
+  <i class="spinner-grow spinner-grow-sm"></i>
+  <span class="m-1">Loading...</span>
+</div>
+
+<div cdkDropListGroup>
+  <c-card *ngIf="!isLoading" class="mb-4 border-warning">
+    <c-card-body>
+      <c-row>
+        <c-col sm="5">
+          <h4 class="card-title mb-5" id="traffic1">Mes rendez-vous</h4>
+        </c-col>
+      </c-row>
+      <c-row
+        cdkDropList
+        [cdkDropListData]="listRendezvous"
+        #list2="cdkDropList"
+        [cdkDropListConnectedTo]="[list2]"
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListDisabled]="true"
+      >
+        @for (rendezvous of listRendezvous; track rendezvous) {
+        <c-col cdkDrag lg="4" class="example-box">
+          <c-card textColor="dark" class="mb-3">
+            <c-card-header class="d-flex justify-content-between">
+              {{ rendezvous.service.nom }}
+            </c-card-header>
+            <c-card-body>
+              <c-row>
+                <c-col md="6"><h5 cCardTitle>Date:</h5></c-col>
+                <c-col md="6"
+                  ><p>{{ formatDate(rendezvous.date_heure) }}</p></c-col
+                >
+                <c-col md="6"><h5 cCardTitle>Client:</h5></c-col>
+                <c-col md="6"
+                  ><p>
+                    {{ rendezvous.customer.nom }}
+                    {{ rendezvous.customer.prenom }}
+                  </p></c-col
+                >
+              </c-row>
+              <button
+                type="button"
+                md="12"
+                color="warning"
+                class="form-control"
+                cButton
+                *ngIf="rendezvous.is_valid === 0"
+                (click)="onValidateRendezvous(rendezvous._id)"
+              >
+                Valider
+              </button>
+              <button
+                type="button"
+                md="12"
+                color="success"
+                class="form-control"
+                cButton
+                *ngIf="rendezvous.is_valid === 1"
+              >
+                Validé
+              </button>
+            </c-card-body>
+          </c-card>
+        </c-col>
+        }
+      </c-row>
+    </c-card-body>
+  </c-card>
+
+  <c-card *ngIf="!isLoading" class="mb-4 border-warning">
+    <c-card-body>
+      <c-row>
+        <c-col sm="5">
+          <h4 class="card-title mb-5" id="traffic">Rendez-vous non assignés</h4>
+        </c-col>
+      </c-row>
+      <c-row
+        cdkDropList
+        #list2="cdkDropList"
+        [cdkDropListData]="listRendezvousNoEmploye"
+        [cdkDropListConnectedTo]="[list2]"
+        (cdkDropListDropped)="drop($event)"
+      >
+        @for (rendezvousNoEmploye of listRendezvousNoEmploye; track
+        rendezvousNoEmploye) {
+        <c-col cdkDrag lg="4" class="example-box">
+          <c-card textColor="dark" class="mb-3">
+            <c-card-header class="d-flex justify-content-between">
+              {{ rendezvousNoEmploye.service.nom }}
+            </c-card-header>
+            <c-card-body>
+              <c-row>
+                <c-col md="6"><h5 cCardTitle>Date:</h5></c-col>
+                <c-col md="6"
+                  ><p>
+                    {{ formatDate(rendezvousNoEmploye.date_heure) }}
+                  </p></c-col
+                >
+                <c-col md="6"><h5 cCardTitle>Client:</h5></c-col>
+                <c-col md="6"
+                  ><p>
+                    {{ rendezvousNoEmploye.customer.nom }}
+                    {{ rendezvousNoEmploye.customer.prenom }}
+                  </p></c-col
+                >
+              </c-row>
+              <button
+                type="button"
+                md="12"
+                color="warning"
+                class="form-control"
+                cButton
+                *ngIf="rendezvousNoEmploye.is_valid === 0"
+                (click)="onValidateRendezvousNoemploye(rendezvousNoEmploye._id)"
+              >
+                Valider
+              </button>
+              <button
+                type="button"
+                md="12"
+                color="success"
+                class="form-control"
+                cButton
+                *ngIf="rendezvousNoEmploye.is_valid === 1"
+              >
+                Validé
+              </button>
+            </c-card-body>
+          </c-card>
+        </c-col>
+        }
+      </c-row>
+    </c-card-body>
+  </c-card>
+</div>
