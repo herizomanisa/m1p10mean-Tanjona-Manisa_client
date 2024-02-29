@@ -74,6 +74,7 @@ export class EmployeLoginComponent implements OnInit {
             this.route.navigate(['/employe']);
             return;
           }
+          this.errorMessage = 'Identifiant ou mot de passe incorrect';
         },
         error: (err) => {
           this.isLoading = false;
