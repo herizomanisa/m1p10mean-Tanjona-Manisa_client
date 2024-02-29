@@ -27,8 +27,6 @@ import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 
 import { OffreComponent } from './offre/offre.component';
-
-import { WidgetsModule } from '../widgets/widgets.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ClientRoutingModule } from './client-routing.module';
@@ -51,7 +49,6 @@ import { ClientRoutingModule } from './client-routing.module';
     ChartjsModule,
     AvatarModule,
     TableModule,
-    WidgetsModule,
     CommonModule,
     AlertModule,
     BadgeModule,

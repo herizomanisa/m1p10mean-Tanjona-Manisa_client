@@ -32,7 +32,6 @@ import { EmployeComponent } from './employe/employe.component';
 import { BeneficeComponent } from './benefice/benefice.component';
 import { OffreComponent } from './offre/offre.component';
 
-import { WidgetsModule } from '../widgets/widgets.module';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToggleButtonModule } from 'primeng/togglebutton';
@@ -55,7 +54,6 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     ChartjsModule,
     AvatarModule,
     TableModule,
-    WidgetsModule,
     CommonModule,
     DocsComponentsModule,
     AlertModule,
