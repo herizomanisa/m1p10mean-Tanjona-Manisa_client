@@ -137,6 +137,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: '',
+        loadChildren: () =>
+          import('./views/client/client.module').then(
+            (m) => m.ClientModule
+          ),
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./views/dashboard/dashboard.module').then(

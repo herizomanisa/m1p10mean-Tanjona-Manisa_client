@@ -1,0 +1,28 @@
+<c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-body>
+            <div *ngIf="is_loading" class="d-flex justify-content-center">
+                <span><c-spinner color="secondary" size="sm"></c-spinner> loading...</span>
+              </div>
+              <table *ngIf="!is_loading" cTable>
+                <thead>
+                <tr>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let service of list_offre; index as i">
+                    <td><h5>Felicitation, vous avez obtenu une offre speciale.</h5>
+                        <p>Reduction de {{service.reduction}} % sur chaque rendez-vous fait sur le service 
+                            "{{service.id_service.nom}}".
+                        </p>
+                        <p>Offre valable jusqu'au {{service.date_heure_fin | date: 'dd-MM-yyyy  HH:mm'}}</p>
+                    </td>
+                </tr>
+                </tbody>
+              </table>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>
