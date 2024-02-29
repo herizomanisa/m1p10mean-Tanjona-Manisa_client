@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -20,9 +20,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EmployeRoutingModule } from './employe-routing.module';
 
 import { EmployeProfilComponent } from './employe-profil/employe-profil.component';
+import { RendezvousListComponent } from './rendezvous-list/rendezvous-list.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  declarations: [EmployeProfilComponent],
+  declarations: [EmployeProfilComponent, RendezvousListComponent],
   imports: [
     CommonModule,
     CardModule,
@@ -38,6 +40,8 @@ import { EmployeProfilComponent } from './employe-profil/employe-profil.componen
     EmployeRoutingModule,
     SpinnerModule,
     FontAwesomeModule,
+    DragDropModule
   ],
+  providers: [DatePipe]
 })
 export class EmployeModule {}

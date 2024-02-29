@@ -95,4 +95,22 @@ export class RendezvousService {
       }
     );
   }
+
+  getRendezvousNoEmploye(token: string): Observable<ResponseData<any>> {
+    return this.http.post<ResponseData<any>>(
+      `${this.rendezvous_apiurl}/no-employe`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
+  getRendezvousNoEmployeUpToDate(token: string): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.rendezvous_apiurl}/no-employe/up-date`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
 }

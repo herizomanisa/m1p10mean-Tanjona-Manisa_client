@@ -27,6 +27,10 @@ export class EmployeService {
     'Authorization',
     'Bearer ' + localStorage.getItem('x-authorization-m-token')
   );
+  private headers_employe = new HttpHeaders().set(
+    'Authorization',
+    `Bearer ${localStorage.getItem('x-authorization-e-token')}`
+  );
 
   constructor(
     private http: HttpClient,
@@ -132,6 +136,49 @@ export class EmployeService {
       `${this.employes_apiurl}/employe/${id}`,
       { is_activated },
       { headers: this.headers_admin }
+    );
+  }
+
+  getRdvAssigneUpToDate(token: string): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.employes_apiurl}/rendezvous/assigne/up-to-date`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
+  getRendezvousUpToDate(token: string): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.employes_apiurl}/rendezvous/up-to-date`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
+  validateRendezvous(
+    id_rendezvous: string,
+    token: string
+  ): Observable<ResponseData<any>> {
+    return this.http.put<ResponseData<any>>(
+      `${this.employes_apiurl}/rendezvousvalidate/${id_rendezvous}`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
+  acceptRdvNoEmploye(
+    data: { id_rendezvous: string },
+    token: string
+  ): Observable<ResponseData<any>> {
+    return this.http.put<ResponseData<any>>(
+      `${this.employes_apiurl}/accept/rendezvous`,
+      data,
+      {
+        headers: this.getHeaders(token),
+      }
     );
   }
 }

@@ -116,6 +116,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'rendezvous-my-list',
+        loadChildren: () =>
+          import('./views/rendezvous-my-list/rendezvous-my-list.module').then(
+            (m) => m.RendezvousMyListModule
+          ),
+      },
+      {
         path: 'employe-list',
         loadChildren: () =>
           import('./views/employe-client-list/employe-client-list.module').then(
@@ -175,7 +182,7 @@ const routes: Routes = [
   // Employe route
   {
     path: 'employe',
-    redirectTo: 'employe/employe-profil',
+    redirectTo: 'employe',
     pathMatch: 'full',
   },
 
@@ -188,7 +195,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'employe-profil',
+        path: '',
         loadChildren: () =>
           import('./views/employe/employe.module').then((m) => m.EmployeModule),
       },

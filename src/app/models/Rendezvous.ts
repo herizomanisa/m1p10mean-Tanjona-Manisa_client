@@ -2,8 +2,8 @@ export interface Rendezvous {
   _id: string;
   id_customer: string;
   id_service: string;
-  idemploye?: string | null;
+  id_employe?: string | null;
   date_heure: Date;
-  isValid: number;
+  is_valid: number;
   created_at: Date;
 }
