@@ -36,7 +36,6 @@ export class EmployeProfilComponent implements OnInit {
     heure_fin: '',
     sexe: '',
     created_at: new Date(),
-    is_activated: 0,
   };
 
   employeForm!: FormGroup;
@@ -97,32 +96,34 @@ export class EmployeProfilComponent implements OnInit {
   }
 
   getEmploye(): void {
-    this.employeService.getEmployeById(this.id_employe, this.token).subscribe({
-      next: (response: ResponseData<Employe>) => {
-        this.isLoading = false;
-        this.employe = response.details as Employe;
-        this.employeForm = this.fb.group(
-          {
-            image: [response.details?.image],
-            nom: [response.details?.nom],
-            prenom: [response.details?.prenom],
-            sexe: [response.details?.sexe],
-            tel: [response.details?.tel],
-            email: [response.details?.email, [Validators.email]],
-            addresse: [response.details?.addresse],
-            mdp: [''],
-            repeatedMdp: [''],
-            heure_debut: [response.details?.heure_debut],
-            heure_fin: [response.details?.heure_fin],
-          },
-          { validators: this.passwordMatchValidator }
-        );
-      },
-      error: (err) => {
-        this.isLoading = false;
-        console.error(err);
-      },
-    });
+    this.employeService
+      .getEmployeByIdEmploye(this.id_employe, this.token)
+      .subscribe({
+        next: (response: ResponseData<Employe>) => {
+          this.isLoading = false;
+          this.employe = response.details as Employe;
+          this.employeForm = this.fb.group(
+            {
+              image: [response.details?.image],
+              nom: [response.details?.nom],
+              prenom: [response.details?.prenom],
+              sexe: [response.details?.sexe],
+              tel: [response.details?.tel],
+              email: [response.details?.email, [Validators.email]],
+              addresse: [response.details?.addresse],
+              mdp: [''],
+              repeatedMdp: [''],
+              heure_debut: [response.details?.heure_debut],
+              heure_fin: [response.details?.heure_fin],
+            },
+            { validators: this.passwordMatchValidator }
+          );
+        },
+        error: (err) => {
+          this.isLoading = false;
+          console.error(err);
+        },
+      });
   }
 
   onUpdateSubmit(): void {
@@ -139,7 +140,7 @@ export class EmployeProfilComponent implements OnInit {
       };
       this.isLoading = true;
       this.employeService
-        .updateEmploye(this.id_employe, data, this.token)
+        .updateEmployeByIdemploye(this.id_employe, data, this.token)
         .subscribe({
           next: () => {
             this.toast.success(

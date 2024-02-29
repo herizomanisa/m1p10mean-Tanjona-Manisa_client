@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../storage/local-storage.service';
-import { ResponseData } from 'src/app/models/ResponseData';
+import { ResponseData } from '../../models/ResponseData';
 import { Observable } from 'rxjs';
-import { Employe } from 'src/app/models/Employe';
+import { Employe } from '../../models/Employe';
 
 interface EmployeForm {
   image: string;
@@ -23,6 +23,10 @@ interface EmployeForm {
 })
 export class EmployeService {
   private employes_apiurl = `${environment.apiUrl}/api/employes`;
+  private headers_admin = new HttpHeaders().set(
+    'Authorization',
+    'Bearer ' + localStorage.getItem('x-authorization-m-token')
+  );
 
   constructor(
     private http: HttpClient,
@@ -46,10 +50,13 @@ export class EmployeService {
     );
   }
 
-  getEmploye(token: string): Observable<ResponseData<any>> {
-    return this.http.get<ResponseData<any>>(`${this.employes_apiurl}/list`, {
-      headers: this.getHeaders(token),
-    });
+  getEmploye(): Observable<ResponseData<Employe[]>> {
+    return this.http.get<ResponseData<Employe[]>>(
+      `${this.employes_apiurl}/list`,
+      {
+        headers: this.headers_admin,
+      }
+    );
   }
 
   getEmployeActif(token: string): Observable<ResponseData<any>> {
@@ -61,7 +68,10 @@ export class EmployeService {
     );
   }
 
-  getEmployeById(id: string, token: string): Observable<ResponseData<any>> {
+  getEmployeByIdEmploye(
+    id: string,
+    token: string
+  ): Observable<ResponseData<any>> {
     return this.http.get<ResponseData<any>>(
       `${this.employes_apiurl}/employe/${id}`,
       {
@@ -70,7 +80,7 @@ export class EmployeService {
     );
   }
 
-  updateEmploye(
+  updateEmployeByIdemploye(
     id: string,
     data: EmployeForm,
     token: string
@@ -81,6 +91,47 @@ export class EmployeService {
       {
         headers: this.getHeaders(token),
       }
+    );
+  }
+
+  getEmployeById(id: string): Observable<ResponseData<Employe>> {
+    return this.http.get<ResponseData<Employe>>(
+      `${this.employes_apiurl}/employe/${id}`,
+      { headers: this.headers_admin }
+    );
+  }
+
+  updateEmploye(id: string, data: Employe): Observable<ResponseData<any>> {
+    return this.http.put<ResponseData<any>>(
+      `${this.employes_apiurl}/employe/${id}`,
+      data,
+      { headers: this.headers_admin }
+    );
+  }
+
+  deleteEmploye(id: string): Observable<ResponseData<any>> {
+    return this.http.delete<ResponseData<any>>(
+      `${this.employes_apiurl}/employe/${id}`,
+      { headers: this.headers_admin }
+    );
+  }
+
+  createEmploye(data: Employe): Observable<ResponseData<any>> {
+    return this.http.post<ResponseData<any>>(
+      `${this.employes_apiurl}/create`,
+      data,
+      { headers: this.headers_admin }
+    );
+  }
+
+  updateEmployeToActivated(
+    id: string,
+    is_activated: boolean
+  ): Observable<ResponseData<any>> {
+    return this.http.put<ResponseData<any>>(
+      `${this.employes_apiurl}/employe/${id}`,
+      { is_activated },
+      { headers: this.headers_admin }
     );
   }
 }

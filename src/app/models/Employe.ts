@@ -9,8 +9,8 @@ export interface Employe {
   mdp: string;
   heure_debut: string;
   heure_fin: string;
-  is_activated: number;
-  created_at: Date;
+  is_activated?: boolean;
+  created_at?: Date;
   sexe: string;
   is_prefered?: boolean;
 }

@@ -28,6 +28,8 @@ import { ChartjsModule } from '@coreui/angular-chartjs';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { ServiceComponent } from './service/service.component';
+import { EmployeComponent } from './employe/employe.component';
+import { BeneficeComponent } from './benefice/benefice.component';
 
 import { WidgetsModule } from '../widgets/widgets.module';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
@@ -68,7 +70,11 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     ToggleButtonModule,
     FormsModule
   ],
-  declarations: [ServiceComponent]
+  declarations: [
+    ServiceComponent,
+    EmployeComponent,
+    BeneficeComponent
+  ]
 })
 export class AdminModule {
 }

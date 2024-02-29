@@ -1,0 +1,106 @@
+<c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Calcul Benefice (annee {{annee}})</strong>
+        </c-card-header>
+        <c-card-body>
+            <div class="d-flex justify-content-center align-items-center flex-column">
+                <p class="text-medium-emphasis small">
+                    Vous choisissez le mois que vous voulez.
+                </p>
+                <p class="text-medium-emphasis small">
+                    Methode de calcul: Sommes des paiements effectues - salaire des employes + prix du loyer + 
+                    prix des pièces achetés + autres dépenses
+                </p>
+                <p class="text-medium-emphasis small">
+                    Le salaire des employes est la somme des commissions pour le mois choisis
+                </p>
+            </div>
+            <div class="flex align-items-center gap-5">
+                <form [formGroup]="calculForm" (ngSubmit)="onCalculSubmit()" cForm>
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+                        <label cLabel for="moisForm">Mois</label>
+                        <select aria-label="Default select example" formControlName="mois" id="moisForm" cSelect>
+                            <option value="1">Janvier</option>
+                            <option value="2">Fevrier</option>
+                            <option value="3">Mars</option>
+                            <option value="4">Avril</option>
+                            <option value="5">Mais</option>
+                            <option value="6">Juin</option>
+                            <option value="7">Juillet</option>
+                            <option value="8">Aout</option>
+                            <option value="9">Septembre</option>
+                            <option value="10">Octobre</option>
+                            <option value="11">Novembre</option>
+                            <option value="12">Decembre</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+                        <label cLabel for="loyerForm">Prix du loyer</label>
+                        <input cFormControl
+                                id="loyerForm"
+                                placeholder="Ar"
+                                type="number"
+                                formControlName="loyer"
+                                min="0"
+                        />
+                        Ariary
+                        <!-- @if(createForm.get('nom')?.hasError('required') && createForm.get('nom')?.touched) {
+                        <p class="text-danger">nom is required</p>
+                        } -->
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+                        <label cLabel for="pieceForm">Prix des pièces achetés</label>
+                        <input cFormControl
+                                id="pieceForm"
+                                placeholder="Ar"
+                                type="number"
+                                formControlName="piece"
+                                min="0"
+                        />
+                        Ariary
+                        <!-- @if(createForm.get('nom')?.hasError('required') && createForm.get('nom')?.touched) {
+                        <p class="text-danger">nom is required</p>
+                        } -->
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+                        <label cLabel for="autreForm">Autres dépenses</label>
+                        <input cFormControl
+                                id="autreForm"
+                                placeholder="Ar"
+                                type="number"
+                                formControlName="autre"
+                                min="0"
+                        />
+                        Ariary
+                        <!-- @if(createForm.get('nom')?.hasError('required') && createForm.get('nom')?.touched) {
+                        <p class="text-danger">nom is required</p>
+                        } -->
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+                        <button *ngIf="is_loading" cButton class="me-1" color="info" disabled>
+                            <c-spinner aria-hidden="true" size="sm"></c-spinner>
+                            Loading...
+                        </button>
+                        <button *ngIf="!is_loading" cButton class="me-1"
+                            color='info' type="submit">
+                            Valider
+                        </button>
+                    </div>
+
+                    <div class="flex justify-content-start">
+                        Paiements effectues: {{paiement}} Ariary
+                    </div>
+                    <div class="flex justify-content-start">
+                        Salaire des employes: {{salaire}} Ariary 
+                    </div>
+                    <div class="flex justify-content-start">
+                        CA pour ce mois: <span [class]="valeur > 0 ? 'text-success' : 'text-danger'">{{valeur}} Ariary</span> 
+                    </div>
+                </form>
+            </div>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>
