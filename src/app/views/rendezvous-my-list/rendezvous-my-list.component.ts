@@ -64,21 +64,26 @@ export class RendezvousMyListComponent implements OnInit {
 
   onPaymentSubmit(id_rendezvous: string): void {
     this.isLoading = true;
-    this.clientService.payment({ id_rendezvous }).subscribe({
-      next: () => {
-        this.toast.success('Paiement effectué avec succès', 'Succès', {
-          timeOut: 5000,
-        });
-        this.isLoading = false;
-        this.initData();
-      },
-      error: () => {
-        this.toast.error('Échec du paiement', 'Erreur', {
-          timeOut: 5000,
-        });
-        this.isLoading = false;
-      },
-    });
+    this.clientService
+      .payment(
+        { id_rendezvous },
+        this.localStorageService.getData('x-authorization-c-token') || ''
+      )
+      .subscribe({
+        next: () => {
+          this.toast.success('Paiement effectué avec succès', 'Succès', {
+            timeOut: 5000,
+          });
+          this.isLoading = false;
+          this.initData();
+        },
+        error: () => {
+          this.toast.error('Échec du paiement', 'Erreur', {
+            timeOut: 5000,
+          });
+          this.isLoading = false;
+        },
+      });
     return;
   }
 }

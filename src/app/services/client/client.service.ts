@@ -71,13 +71,17 @@ export class ClientService {
   }
 
   getOffres(headers: HttpHeaders): Observable<ResponseData<Offre[]>> {
-    return this.http.get<ResponseData<Offre[]>>(`${this.customers_apiurl}/offers`, { headers: headers });
+    return this.http.get<ResponseData<Offre[]>>(
+      `${this.customers_apiurl}/offers`,
+      { headers: headers }
+    );
   }
-  
-  payment(data: { id_rendezvous: string }): Observable<any> {
+
+  payment(data: { id_rendezvous: string }, token: string): Observable<any> {
     return this.http.post<ResponseData<String>>(
       `${this.customers_apiurl}/payment`,
-      data
+      data,
+      { headers: this.getHeaders(token) }
     );
   }
 
