@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { ManagerService } from 'src/app/services/manager/manager.service';
 import { ResponseData } from 'src/app/models/ResponseData';
 import { EmployeTravail } from 'src/app/models/EmployeTravail';
+import { HttpHeaders } from '@angular/common/http';
 
 interface IUser {
   name: string;
@@ -27,6 +28,7 @@ interface IUser {
   styleUrls: ['dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  private headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
   constructor(
     private chartsData: DashboardChartsData,
     private managerService: ManagerService
@@ -78,7 +80,7 @@ export class DashboardComponent implements OnInit {
   }
 
   initTravailMoyenne(){
-    this.managerService.getStatistics_travail_employe()
+    this.managerService.getStatistics_travail_employe(this.headers)
     .subscribe({
       next: (result: ResponseData<EmployeTravail[]>) => {
         

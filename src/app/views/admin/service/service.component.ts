@@ -5,6 +5,7 @@ import { ResponseData } from '../../../models/ResponseData';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ModalComponent } from '@coreui/angular';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-service',
@@ -15,6 +16,7 @@ export class ServiceComponent implements OnInit{
   @ViewChild('updateModal') updateModal?: ModalComponent;
   @ViewChild('createModal') createModal?: ModalComponent;
   @ViewChild('deleteModal') deleteModal?: ModalComponent;
+  private headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
   is_loading: Boolean = false
   is_loading_activated: Boolean = false
   _id: string = ""
@@ -96,7 +98,7 @@ export class ServiceComponent implements OnInit{
   }
 
   onDeleteSubmit(id: string){
-      this.service.deleteService(id).subscribe({
+      this.service.deleteService(this.headers, id).subscribe({
         next: () => { this.deleteModal!.visible = false },
         error: (err) => console.log(err.message),
         complete: () => {
@@ -130,7 +132,7 @@ export class ServiceComponent implements OnInit{
   onUpdateSubmit(id: string){
     if (this.updateForm.valid) {
       this.updateModal!.visible = false
-      this.service.updateService(id, this.updateForm.value).subscribe({
+      this.service.updateService(this.headers, id, this.updateForm.value).subscribe({
         next: () => {
           this.updateModal!.visible = false
         },
@@ -168,7 +170,7 @@ export class ServiceComponent implements OnInit{
 
   onCreateSubmit(){
     if (this.createForm.valid) {
-      this.service.createService(this.createForm.value).subscribe({
+      this.service.createService(this.headers, this.createForm.value).subscribe({
         next: () => {
           this.createModal!.visible = false
         },
@@ -210,7 +212,7 @@ export class ServiceComponent implements OnInit{
     console.log(actif);
     
     this.is_loading_activated = true
-    this.service.updateServiceToActivated(id, actif).subscribe({
+    this.service.updateServiceToActivated(this.headers, id, actif).subscribe({
       next: (result) => {
       },
       error: (err) => {

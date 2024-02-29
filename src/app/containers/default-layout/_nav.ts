@@ -4,11 +4,7 @@ export const navItems: INavData[] = [
   {
     name: 'Dashboard',
     url: '/admin/dashboard',
-    iconComponent: { name: 'cil-speedometer' },
-    badge: {
-      color: 'info',
-      text: 'NEW'
-    }
+    iconComponent: { name: 'cil-speedometer' }
   },
   {
     name: 'Service',
@@ -26,20 +22,8 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cilDollar' }
   },
   {
-    title: true,
-    name: 'Theme'
-  },
-  {
-    name: 'Docs',
-    url: 'https://coreui.io/angular/docs/templates/installation',
-    iconComponent: { name: 'cil-description' },
-    attributes: { target: '_blank', class: '-text-dark' },
-    class: 'mt-auto'
-  },
-  {
-    name: 'Try CoreUI PRO',
-    url: 'https://coreui.io/product/angular-dashboard-template/',
-    iconComponent: { name: 'cil-layers' },
-    attributes: { target: '_blank' }
+    name: 'Offre',
+    url: '/admin/offre',
+    iconComponent: { name: 'cil-basket' }
   }
 ];

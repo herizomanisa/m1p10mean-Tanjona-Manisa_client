@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ManagerService } from '../../../services/manager/manager.service';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-benefice',
@@ -9,6 +10,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './benefice.component.scss'
 })
 export class BeneficeComponent implements OnInit{
+  private headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
   calculForm!: FormGroup;
   salaire: number = 0
   paiement: number = 0
@@ -32,7 +34,7 @@ export class BeneficeComponent implements OnInit{
 
   ngOnInit(): void {
       this.initializeForm();
-      this.managerService.getCalcul_CA(new Date().getMonth()+1, 0, 0, 0).subscribe({
+      this.managerService.getCalcul_CA(this.headers,new Date().getMonth()+1, 0, 0, 0).subscribe({
         next:(result) => {
           this.salaire = result.details.salaire
           this.paiement = result.details.payment
@@ -46,7 +48,7 @@ export class BeneficeComponent implements OnInit{
   onCalculSubmit(){
     console.log(this.calculForm.value)
     this.is_loading = true
-    this.managerService.getCalcul_CA(this.calculForm.value.mois, this.calculForm.value.loyer,
+    this.managerService.getCalcul_CA(this.headers,this.calculForm.value.mois, this.calculForm.value.loyer,
       this.calculForm.value.piece, this.calculForm.value.autre).subscribe({
       next:(result) => {
         this.salaire = result.details.salaire

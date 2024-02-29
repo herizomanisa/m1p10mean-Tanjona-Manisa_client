@@ -58,6 +58,17 @@ export class ClientService {
     );
   }
 
+  searchByName(name: string, email: string): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.customers_apiurl}/search/name?name=${name}&email=${email}`,
+      {
+        headers: this.getHeaders(
+          this.localStorageService.getData('x-authorization-m-token')
+        ),
+      }
+    );
+  }
+
   payment(data: { id_rendezvous: string }): Observable<any> {
     return this.http.post<ResponseData<String>>(
       `${this.customers_apiurl}/payment`,

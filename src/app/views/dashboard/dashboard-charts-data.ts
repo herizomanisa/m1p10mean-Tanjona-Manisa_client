@@ -4,6 +4,7 @@ import { ResponseData } from '../../models/ResponseData';
 import { ManagerService } from 'src/app/services/manager/manager.service';
 import { StatMois } from '../../models/StatMois'
 import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
 
 export interface IChartProps {
   data?: any;
@@ -20,6 +21,7 @@ export interface IChartProps {
   providedIn: 'any'
 })
 export class DashboardChartsData {
+  private headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
   constructor(private managerService: ManagerService) {
     this.initMainChart();
     this.initChartCA();
@@ -138,7 +140,7 @@ export class DashboardChartsData {
     };
     
     if (period === 'MonthCA') {
-      this.managerService.getStatistics_CA_mois()
+      this.managerService.getStatistics_CA_mois(this.headers)
       .subscribe({
         next: (result: ResponseData<StatMois[]>) => {
           
@@ -161,7 +163,7 @@ export class DashboardChartsData {
     }
 
     if (period === 'DayCA') {
-      this.managerService.getStatistics_CA_jour()
+      this.managerService.getStatistics_CA_jour(this.headers)
       .subscribe({
         next: (result: ResponseData<StatMois[]>) => {
           
@@ -297,7 +299,7 @@ export class DashboardChartsData {
     };
     
     if (period === 'Month') {
-      this.managerService.getStatistics_rdv_mois()
+      this.managerService.getStatistics_rdv_mois(this.headers)
       .subscribe({
         next: (result: ResponseData<StatMois[]>) => {
           
@@ -320,7 +322,7 @@ export class DashboardChartsData {
     }
 
     if (period === 'Day') {
-      this.managerService.getStatistics_rdv_jour()
+      this.managerService.getStatistics_rdv_jour(this.headers)
       .subscribe({
         next: (result: ResponseData<StatMois[]>) => {
           

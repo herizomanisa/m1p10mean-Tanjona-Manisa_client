@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment.development';
 export class ManagerService {
   private apiurl=`${environment.apiUrl}/api/managers`;
   // private apiurl='http://localhost:5000/api/managers';
-  private headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
+  // private headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('x-authorization-m-token'));
 
   constructor(private http: HttpClient) { }
 
@@ -21,28 +21,28 @@ export class ManagerService {
       return await this.http.post<ResponseData<String>>(`${this.apiurl}/login`, {nom, mdp})
   }
 
-  getStatistics_rdv_mois(): Observable<ResponseData<StatMois[]>>{
-    return this.http.get<ResponseData<StatMois[]>>(`${this.apiurl}/statistique/reservation-mois`,{ headers: this.headers })
+  getStatistics_rdv_mois(header: HttpHeaders): Observable<ResponseData<StatMois[]>>{
+    return this.http.get<ResponseData<StatMois[]>>(`${this.apiurl}/statistique/reservation-mois`,{ headers: header })
   }
 
-  getStatistics_rdv_jour(): Observable<ResponseData<StatMois[]>>{
-    return this.http.get<ResponseData<StatMois[]>>(`${this.apiurl}/statistique/reservation-jour`,{ headers: this.headers })
+  getStatistics_rdv_jour(header: HttpHeaders): Observable<ResponseData<StatMois[]>>{
+    return this.http.get<ResponseData<StatMois[]>>(`${this.apiurl}/statistique/reservation-jour`,{ headers: header })
   }
 
-  getStatistics_travail_employe(): Observable<ResponseData<EmployeTravail[]>>{
-    return this.http.get<ResponseData<EmployeTravail[]>>(`${this.apiurl}/statistique/employe`,{ headers: this.headers })
+  getStatistics_travail_employe(header: HttpHeaders): Observable<ResponseData<EmployeTravail[]>>{
+    return this.http.get<ResponseData<EmployeTravail[]>>(`${this.apiurl}/statistique/employe`,{ headers: header })
   }
 
-  getStatistics_CA_mois(): Observable<ResponseData<StatMois[]>>{
-    return this.http.get<ResponseData<StatMois[]>>(`${this.apiurl}/statistique/ca-mois`,{ headers: this.headers })
+  getStatistics_CA_mois(header: HttpHeaders): Observable<ResponseData<StatMois[]>>{
+    return this.http.get<ResponseData<StatMois[]>>(`${this.apiurl}/statistique/ca-mois`,{ headers: header })
   }
 
-  getStatistics_CA_jour(): Observable<ResponseData<StatMois[]>>{
-    return this.http.get<ResponseData<StatMois[]>>(`${this.apiurl}/statistique/ca-jour`,{ headers: this.headers })
+  getStatistics_CA_jour(header: HttpHeaders): Observable<ResponseData<StatMois[]>>{
+    return this.http.get<ResponseData<StatMois[]>>(`${this.apiurl}/statistique/ca-jour`,{ headers: header })
   }
 
-  getCalcul_CA(mois: number, loyer: number, piece:number, autres: number): Observable<ResponseData<any>>{
+  getCalcul_CA(header: HttpHeaders, mois: number, loyer: number, piece:number, autres: number): Observable<ResponseData<any>>{
     return this.http.get<ResponseData<any>>(`${this.apiurl}/CA?mois=${mois}&loyer=${loyer}&piece=${piece}&autres=${autres}`,
-    { headers: this.headers })
+    { headers: header })
   }
 }

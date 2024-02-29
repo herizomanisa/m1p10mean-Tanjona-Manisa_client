@@ -3,7 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
-import { LocalStorageService } from 'src/app/services/storage/local-storage.service';
+import { LocalStorageService } from '../../../services/storage/local-storage.service';
+import { BlacklistTokenService } from '../../../services/blacklisttoken/blacklist-token.service';
 
 @Component({
   selector: 'app-default-header',
@@ -21,13 +22,22 @@ export class DefaultHeaderComponent extends HeaderComponent {
   constructor(
     private classToggler: ClassToggleService,
     private localStorageService: LocalStorageService,
+    private blacklist: BlacklistTokenService,
     private route: Router
   ) {
     super();
   }
 
   logOut(): void {
-    this.localStorageService.removeData("x-authorization-m-token");
-    this.route.navigate(['/login']);
+    this.blacklist.deconnection(this.localStorageService.getData("x-authorization-m-token")!).subscribe({
+      next: () => {
+        this.localStorageService.removeData("x-authorization-m-token");
+        this.route.navigate(['/login']);
+      },
+      error: (err) => {console.log(err);
+      },
+      complete: () => {console.log("Deconnected");
+      }
+    })
   }
 }
