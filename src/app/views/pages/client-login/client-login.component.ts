@@ -86,4 +86,12 @@ export class ClientLoginComponent implements OnInit {
   goToRegister(): void {
     this.route.navigate(['/client/register']);
   }
+
+  goToLoginEmploye(): void{
+    this.route.navigate(['/employe/login']);
+  }
+
+  goToLoginManager(): void{
+    this.route.navigate(['/login']);
+  }
 }

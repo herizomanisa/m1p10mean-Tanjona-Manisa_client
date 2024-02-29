@@ -96,20 +96,38 @@
               </form>
             </c-card-body>
           </c-card>
-          <!-- <c-card [ngStyle]="{'width.%': 44}" class="text-white bg-primary py-5">
-              <c-card-body class="text-center">
-                <div>
-                  <h2>Sign up</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-                  <button cButton class="mt-3" color="primary" routerLink="/register">
-                    Register Now!
-                  </button>
-                </div>
-              </c-card-body>
-            </c-card> -->
+          <c-card
+            [ngStyle]="{ 'width.%': 44 }"
+            class="text-white bg-primary py-5"
+          >
+            <c-card-body class="text-center">
+              <div>
+                <h2>Beauty Salon</h2>
+                <p>
+                  Bienvenue chez Beauty Salon, où votre beauté brille. Profitez
+                  de notre sélection de soins et de notre équipe dédiée pour une
+                  expérience inoubliable.
+                </p>
+                <button
+                  cButton
+                  class="mt-3"
+                  color="secondary"
+                  (click)="goToLoginManager()"
+                >
+                  Connexion manager
+                </button>
+                <button
+                  cButton
+                  class="mt-3"
+                  color="secondary"
+                  routerLink="/employe/login"
+                  (click)="goToLoginEmploye()"
+                >
+                  Connexion employé
+                </button>
+              </div>
+            </c-card-body>
+          </c-card>
         </c-card-group>
       </c-col>
     </c-row>

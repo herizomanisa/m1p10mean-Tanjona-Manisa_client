@@ -88,4 +88,12 @@ export class EmployeLoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
     }
   }
+
+  goToLoginClient(): void{
+    this.route.navigate(['/client/login']);
+  }
+
+  goToLoginManager(): void{
+    this.route.navigate(['/login']);
+  }
 }
