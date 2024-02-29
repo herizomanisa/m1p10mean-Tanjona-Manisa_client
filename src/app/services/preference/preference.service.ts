@@ -96,4 +96,26 @@ export class PreferenceService {
       }
     );
   }
+
+  getPreferenceEmploye(): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.preferences_apiurl}/employes`,
+      {
+        headers: this.getHeaders(
+          this.localStorageService.getData('x-authorization-c-token')
+        ),
+      }
+    );
+  }
+
+  getPreferenceService(): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.preferences_apiurl}/services`,
+      {
+        headers: this.getHeaders(
+          this.localStorageService.getData('x-authorization-c-token')
+        ),
+      }
+    );
+  }
 }

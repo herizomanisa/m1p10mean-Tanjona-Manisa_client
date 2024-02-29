@@ -123,6 +123,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'preference',
+        loadChildren: () =>
+          import('./views/preference/preference.module').then(
+            (m) => m.PreferenceModule
+          ),
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./views/dashboard/dashboard.module').then(
@@ -168,7 +175,7 @@ const routes: Routes = [
   // Employe route
   {
     path: 'employe',
-    redirectTo: 'employe/rendezvous',
+    redirectTo: 'employe/employe-profil',
     pathMatch: 'full',
   },
 
@@ -179,20 +186,13 @@ const routes: Routes = [
     data: {
       title: 'Home',
     },
-    // children: [
-    //   {
-    //     path: 'dashboard',
-    //     loadChildren: () =>
-    //       import('./views/dashboard/dashboard.module').then(
-    //         (m) => m.DashboardModule
-    //       ),
-    //   },
-    //   {
-    //     path: 'service',
-    //     loadChildren: () =>
-    //       import('./views/admin/admin.module').then((m) => m.AdminModule),
-    //   },
-    // ],
+    children: [
+      {
+        path: 'employe-profil',
+        loadChildren: () =>
+          import('./views/employe/employe.module').then((m) => m.EmployeModule),
+      },
+    ],
   },
 
   // {
