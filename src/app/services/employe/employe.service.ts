@@ -170,6 +170,9 @@ export class EmployeService {
     return this.http.put<ResponseData<any>>(
       `${this.employes_apiurl}/rendezvousvalidate/${id_rendezvous}`,
       {
+        id_rendezvous,
+      },
+      {
         headers: this.getHeaders(token),
       }
     );
