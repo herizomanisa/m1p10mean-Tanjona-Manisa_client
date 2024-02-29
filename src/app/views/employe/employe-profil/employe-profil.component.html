@@ -1,0 +1,215 @@
+<div *ngIf="isLoading" class="fade show spinner-container">
+  <i class="spinner-grow spinner-grow-sm"></i>
+  <span class="m-1">Loading...</span>
+</div>
+
+<c-card *ngIf="!isLoading" class="mb-4 border-warning">
+  <c-card-body>
+    <c-row>
+      <c-col sm="5">
+        <h4 class="card-title mb-5" id="traffic">Profil Employé</h4>
+      </c-col>
+    </c-row>
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+        <form
+          cForm
+          *ngIf="employeForm"
+          [formGroup]="employeForm"
+          (ngSubmit)="onUpdateSubmit()"
+        >
+          <div class="mb-3">
+            <form cFormFloating>
+              <input
+                autoComplete="name"
+                formControlName="nom"
+                placeholder="Nom"
+                cFormControl
+              />
+              <label cLabel for="serviceNomLabel">Nom</label>
+            </form>
+            <p
+              *ngIf="
+                employeForm.get('nom')?.hasError('required') &&
+                (employeForm.get('nom')?.dirty ||
+                  employeForm.get('nom')?.touched)
+              "
+              class="text-danger"
+            >
+              Le nom est obligatoire
+            </p>
+          </div>
+          <div class="mb-3">
+            <form cFormFloating>
+              <input
+                autoComplete="given-name"
+                cFormControl
+                formControlName="prenom"
+                placeholder="Prénom"
+              />
+              <label cLabel for="servicePrenomLabel">Prénom</label>
+            </form>
+            <p
+              *ngIf="
+                employeForm.get('prenom')?.hasError('required') &&
+                (employeForm.get('prenom')?.dirty ||
+                  employeForm.get('prenom')?.touched)
+              "
+              class="text-danger"
+            >
+              Le prénom est obligatoire.
+            </p>
+          </div>
+          <div class="mb-3">
+            <form cFormFloating>
+              <select
+                formControlName="sexe"
+                aria-label="Default select sexe"
+                cSelect
+              >
+                <option value="M">Homme</option>
+                <option value="F">Femme</option>
+              </select>
+              <label cLabel for="serviceSexeLabel">Sexe</label>
+            </form>
+          </div>
+          <div class="mb-3">
+            <form cFormFloating>
+              <input
+                autoComplete="tel"
+                cFormControl
+                formControlName="tel"
+                placeholder="Numéro de téléphone"
+              />
+              <label cLabel for="serviceTelLabel">Téléphone</label>
+            </form>
+            <p
+              *ngIf="
+                employeForm.get('tel')?.hasError('required') &&
+                (employeForm.get('tel')?.dirty ||
+                  employeForm.get('tel')?.touched)
+              "
+              class="text-danger"
+            >
+              Le numéro de téléphone est obligatoire.
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <form cFormFloating>
+              <input
+                autoComplete="email"
+                formControlName="email"
+                placeholder="E-mail"
+                cFormControl
+              />
+              <label cLabel for="serviceEmailLabel">Email</label>
+            </form>
+            <p
+              *ngIf="
+                employeForm.get('email')?.hasError('required') &&
+                (employeForm.get('email')?.dirty ||
+                  employeForm.get('email')?.touched)
+              "
+              class="text-danger"
+            >
+              L'email est obligatoire.
+            </p>
+            <p
+              *ngIf="employeForm.get('email')?.hasError('email')"
+              class="text-danger"
+            >
+              L'email doit avoir le bon format.
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <form cFormFloating>
+              <input
+                autoComplete="street-address"
+                cFormControl
+                formControlName="addresse"
+                placeholder="Adresse"
+              />
+              <label cLabel for="serviceAddresseLabel">Addresse</label>
+            </form>
+          </div>
+
+          <div class="mb-3">
+            <form cFormFloating>
+              <input
+                autoComplete="new-password"
+                cFormControl
+                placeholder="Mot de passe"
+                formControlName="mdp"
+                type="password"
+              />
+              <label cLabel for="serviceMdpLabel">Nouveau mot de passe</label>
+            </form>
+            <p
+              *ngIf="
+                employeForm.get('mdp')?.hasError('required') &&
+                (employeForm.get('mdp')?.dirty ||
+                  employeForm.get('mdp')?.touched)
+              "
+              class="text-danger"
+            >
+              Le mot de passe est obligatoire.
+            </p>
+          </div>
+          <div class="mb-3">
+            <form cFormFloating>
+              <input
+                autoComplete="new-password"
+                cFormControl
+                formControlName="repeatedMdp"
+                placeholder="Répétez le mot de passe"
+                type="password"
+                (ngModelChange)="checkPasswords()"
+              />
+              <label cLabel for="serviceRepeatedMdpLabel"
+                >Répéter le mot de passe</label
+              >
+            </form>
+            <p
+              *ngIf="employeForm.get('repeatedMdp')?.dirty && employeForm.errors?.['passwordMismatch']"
+              class="text-danger"
+            >
+              Le mot de passe ne correspond pas.
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <form cFormFloating>
+              <div class="form-control" id="servicedebutLabel">
+                {{ employe.heure_debut }}
+              </div>
+              <label cLabel for="servicedebutLabel">Début Horaire</label>
+            </form>
+          </div>
+
+          <div class="mb-4">
+            <form cFormFloating>
+              <div class="form-control" id="servicefinLabel">
+                {{ employe.heure_fin }}
+              </div>
+              <label cLabel for="servicefinLabel">Fin Horaire</label>
+            </form>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" cButton color="success">
+              @if(isLoading) {
+              <c-spinner
+                aria-hidden="true"
+                size="sm"
+                variant="grow"
+              ></c-spinner>
+              Loading... }@else{ Appliquer les modifications }
+            </button>
+          </div>
+        </form>
+      </c-col>
+    </c-row>
+  </c-card-body>
+</c-card>

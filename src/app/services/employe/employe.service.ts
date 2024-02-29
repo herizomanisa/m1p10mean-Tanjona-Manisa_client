@@ -6,6 +6,18 @@ import { ResponseData } from '../../models/ResponseData';
 import { Observable } from 'rxjs';
 import { Employe } from '../../models/Employe';
 
+interface EmployeForm {
+  image: string;
+  nom: string;
+  prenom: string;
+  sexe: string;
+  tel: string;
+  email: string;
+  addresse: string;
+  mdp: string;
+  heure_debut?: string;
+  heure_fin?: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -42,9 +54,38 @@ export class EmployeService {
   }
 
   getEmployeActif(token: string): Observable<ResponseData<any>> {
-    return this.http.get<ResponseData<any>>(`${this.employes_apiurl}/list/activated`, {
-      headers: this.getHeaders(token),
-    });
+    return this.http.get<ResponseData<any>>(
+      `${this.employes_apiurl}/list/activated`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
+  getEmployeByIdEmploye(
+    id: string,
+    token: string
+  ): Observable<ResponseData<any>> {
+    return this.http.get<ResponseData<any>>(
+      `${this.employes_apiurl}/employe/${id}`,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
+  }
+
+  updateEmployeByIdemploye(
+    id: string,
+    data: EmployeForm,
+    token: string
+  ): Observable<ResponseData<any>> {
+    return this.http.put<ResponseData<any>>(
+      `${this.employes_apiurl}/employe/${id}`,
+      data,
+      {
+        headers: this.getHeaders(token),
+      }
+    );
   }
 
   getEmployeById(headers_admin: HttpHeaders, id: string): Observable<ResponseData<Employe>> {
