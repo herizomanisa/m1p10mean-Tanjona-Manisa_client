@@ -26,7 +26,7 @@
       </c-nav-item> -->
     </c-header-nav>
 
-    <c-header-nav class="d-none d-lg-flex">
+    <!-- <c-header-nav class="d-none d-lg-flex">
       <c-nav-item>
         <a routerLink="./" cNavLink>
           <svg cIcon name="cilBell" size="lg"></svg>
@@ -42,7 +42,7 @@
           <svg cIcon name="cilEnvelopeOpen" size="lg"></svg>
         </a>
       </c-nav-item>
-    </c-header-nav>
+    </c-header-nav> -->
     <c-header-nav class="ms-3">
       <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
     </c-header-nav>
@@ -67,14 +67,13 @@
       </c-avatar>
     </button>
     <ul cDropdownMenu class="pt-0 pr-5 w-auto">
-      <li>
+      <!-- <li>
         <h6 cDropdownHeader class="bg-light fw-semibold py-2">Mon compte</h6>
       </li>
       <li>
         <a routerLink="./" cDropdownItem>
           <svg cIcon class="me-2" name="cilBell"></svg>
           Notif
-          <!-- <c-badge class="ms-2 float-end" color="info"> 42 </c-badge> -->
         </a>
       </li>
       <li>
@@ -102,7 +101,7 @@
       </li>
       <li>
         <hr cDropdownDivider />
-      </li>
+      </li> -->
       <li>
         <a cDropdownItem (click)="logOut()">
           <svg cIcon class="me-2" name="cilLockLocked"></svg>
